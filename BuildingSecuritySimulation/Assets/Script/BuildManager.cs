@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour {
 
+    private type selectedType;
+    private string saveTile;
+    private Tile[] tileArray;
+
 	// Use this for initialization
 	void Start () {
         CreateTile(10, 10);
@@ -22,9 +26,34 @@ public class BuildManager : MonoBehaviour {
         {
             for (int j = 0; j < height; j++)
             {
-                Instantiate(_nomarlTile, new Vector3(2*i, 2*j, 0), Quaternion.identity);
+                Instantiate(_nomarlTile, new Vector3(2*i, -2*j, 0), Quaternion.identity);
             }
         }
         
+    }
+
+    public void SelectTileType(type tileType)
+    {
+
+    }
+
+    public void ChangeTileType()
+    {
+
+    }
+
+    public void SettingSecurity()
+    {
+
+    }
+
+    public void LoadCreateTile(string loadData)
+    {
+
+    }
+
+    public void SelectTile()
+    {
+
     }
 }

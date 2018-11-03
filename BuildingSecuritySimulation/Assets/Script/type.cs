@@ -1,0 +1,1 @@
+﻿public enum type { Black, Wall, Door, Window};
