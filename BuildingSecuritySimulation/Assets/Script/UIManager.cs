@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button pausedButton;
+    [SerializeField] private Button stopButton;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -21,12 +24,12 @@ public class UIManager : MonoBehaviour {
 
     public void Save()
     {
-
+        FileManager.instance.Save();
     }
 
     public void Load()
     {
-
+        FileManager.instance.Load();
     }
 
     public void Pause()
@@ -45,7 +48,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowLog()
     {
-
+        FileManager.instance.SaveLog();
     }
 
     public void ShowPallet()
