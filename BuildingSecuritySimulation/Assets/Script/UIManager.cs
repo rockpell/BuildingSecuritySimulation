@@ -7,15 +7,23 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image pause;
     [SerializeField] private GameObject characterSelectWindow;
     [SerializeField] private GameObject CreateTileWindow;
+    [SerializeField] private GameObject Pallet;
     [SerializeField] private Text warningText;
+    
     private Simulation simulation;
     private Character character;
-    private bool isPaused = false;
+
     private GameObject width;
     private GameObject height;
+
+    private bool isPaused = false;
+    private bool isShowPallet = false;
+    private bool isClickPalletArrow = true;
     // Use this for initialization
     void Start () {
+        //시뮬레이션 찾기
         simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
+        //타일 생성시 가로세로 가져오기
         width = CreateTileWindow.transform.GetChild(0).gameObject;
         height = CreateTileWindow.transform.GetChild(1).gameObject;
         //캐릭터 가져와야함
@@ -80,7 +88,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowPallet()
     {
-
+        if(isClickPalletArrow) StartCoroutine(movePallet());
     }
 
     public void CharacterSelect()
@@ -107,26 +115,62 @@ public class UIManager : MonoBehaviour {
 
     public void MakeCreateTile()
     {
+        //입력 값이 공백이면 텍스트를 띄운다
         if(width.transform.GetComponentInChildren<InputField>().text == "" &&
             height.transform.GetComponentInChildren<InputField>().text =="")
         {
             warningText.gameObject.SetActive(true);
             return;
         }
+        //입력값을 int로 가져오기
         int widthValue = System.Convert.ToInt32(width.transform.GetComponentInChildren<InputField>().text);
         int heightValue = System.Convert.ToInt32(height.transform.GetComponentInChildren<InputField>().text);
+        //제대로된 입력값이 들어오면 타일 생성
         if (widthValue >= 10 && widthValue <= 100 && heightValue >= 10 && heightValue <= 100)
         {
             CreateTileWindow.SetActive(false);
+            warningText.gameObject.SetActive(false);
             BuildManager.instance.CreateTile(widthValue, heightValue);
         }
         else
         {
-            warningText.gameObject.SetActive(true);
+            StartCoroutine(ShowWarningText());
         }
     }
     public void CreateTileCancle()
     {
         CreateTileWindow.SetActive(false);
+    }
+    private IEnumerator ShowWarningText()
+    {
+        warningText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        warningText.gameObject.SetActive(false);
+        yield return null;
+    }
+    private IEnumerator movePallet()
+    {
+        int distance = 500;
+        RectTransform rect = Pallet.GetComponent<RectTransform>();
+        isClickPalletArrow = false;
+        while (distance > 0)
+        {
+            yield return new WaitForSeconds(0.001f);
+            if (!isShowPallet)
+            {
+                distance -= 5;
+                rect.localPosition -= new Vector3(5, 0, 0);
+            }
+            else
+            {
+                distance -= 5;
+                rect.localPosition += new Vector3(5, 0, 0);
+            }
+            
+        }
+        yield return null;
+        isClickPalletArrow = true;
+        if (isShowPallet) isShowPallet = false;
+        else isShowPallet = true;
     }
 }
