@@ -14,7 +14,6 @@ public class Tile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         renderer = gameObject.GetComponent<SpriteRenderer>();
-
     }
 	
 	// Update is called once per frame
@@ -74,10 +73,28 @@ public class Tile : MonoBehaviour {
 
     public void Select()
     {
-
+        if (isSelect)
+        {
+            renderer.color = Color.white;
+            isSelect = false;
+        }
+        else
+        {
+            renderer.color = Color.red;
+            isSelect = true;
+        }
     }
+
     private void OnMouseOver()
     {
-        renderer.color = Color.green;
+        if(!isSelect)
+            renderer.color = Color.green;
     }
+
+    private void OnMouseExit()
+    {
+        if (!isSelect)
+            renderer.color = Color.white;
+    }
+    
 }

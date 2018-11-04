@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowPallet()
     {
-        if(isClickPalletArrow) StartCoroutine(movePallet());
+        if(isClickPalletArrow) StartCoroutine(MovePallet());
     }
 
     public void CharacterSelect()
@@ -148,7 +148,7 @@ public class UIManager : MonoBehaviour {
         warningText.gameObject.SetActive(false);
         yield return null;
     }
-    private IEnumerator movePallet()
+    private IEnumerator MovePallet()
     {
         int distance = 500;
         RectTransform rect = Pallet.GetComponent<RectTransform>();
