@@ -14,15 +14,24 @@ public class Simulation : MonoBehaviour {
     }
     public void Play()
     {
-
+        isPlaying = true;    
     }
     public void Pause()
     {
-
+        if (!isPaused)
+        {
+            isPaused = true;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            isPaused = false;
+            Time.timeScale = 1;
+        }
     }
     public void Stop()
     {
-
+        isPlaying = false;
     }
     public void SaveLog()
     {

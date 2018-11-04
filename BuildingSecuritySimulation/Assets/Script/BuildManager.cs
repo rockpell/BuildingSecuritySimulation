@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour {
-
+    public static BuildManager instance;
     private type selectedType;
     private string saveTile;
     private Tile[] tileArray;
-
-	// Use this for initialization
-	void Start () {
-        CreateTile(10, 10);
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
+    // Use this for initialization
+    void Start () {
+       
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     public void CreateTile(int width, int height)

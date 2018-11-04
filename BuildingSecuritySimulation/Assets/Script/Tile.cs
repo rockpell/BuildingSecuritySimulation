@@ -10,11 +10,12 @@ public class Tile : MonoBehaviour {
 
     private Vector3 tilePosition;
     private GameObject additionObject;
-
+    private SpriteRenderer renderer;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        renderer = gameObject.GetComponent<SpriteRenderer>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -74,5 +75,9 @@ public class Tile : MonoBehaviour {
     public void Select()
     {
 
+    }
+    private void OnMouseOver()
+    {
+        renderer.color = Color.green;
     }
 }
