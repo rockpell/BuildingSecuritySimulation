@@ -19,6 +19,10 @@ public class UIManager : MonoBehaviour {
     private bool isPaused = false;
     private bool isShowPallet = false;
     private bool isClickPalletArrow = true;
+    private bool isMouseMoveClick = false;
+
+    private Vector3 tempClickPosition;
+
     // Use this for initialization
     void Start () {
         //시뮬레이션 찾기
@@ -31,7 +35,29 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	}
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            Camera.main.orthographicSize += 0.2f;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            Camera.main.orthographicSize -= 0.2f;
+        }
+
+        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            tempClickPosition = Input.mousePosition;
+            isMouseMoveClick = true;
+        }
+        if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonDown(2)) isMouseMoveClick = false;
+
+        if (isMouseMoveClick)
+        {
+            Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
+            tempClickPosition = Input.mousePosition;
+        }
+        
+    }
 
     public void CreateTile()
     {

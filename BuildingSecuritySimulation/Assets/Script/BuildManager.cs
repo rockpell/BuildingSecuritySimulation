@@ -38,21 +38,17 @@ public class BuildManager : MonoBehaviour {
                 mouseButtonUpPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition);
 
-                RaycastHit2D[] hit = Physics2D.BoxCastAll(mouseButtonDownPosition, 
-                    BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition), 
-                    CalculateBoxDegree(mouseButtonDownPosition - mouseButtonUpPosition), Vector2.zero);
+                RaycastHit2D[] hit = Physics2D.BoxCastAll((mouseButtonDownPosition + mouseButtonUpPosition)/2,
+                    BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition),
+                    0, Vector2.zero);
 
                 tileArray = new Tile[hit.Length];
 
                 for (int i = 0; i < hit.Length; i++)
                 {
-                    //Debug.Log(i + " : " + hit[i].collider.transform.position);
                     tileArray[i] = hit[i].collider.GetComponent<Tile>();
                 }
-
                 SelectTile();
-
-                Debug.Log("Size : " + (mouseButtonDownPosition - mouseButtonUpPosition));
             }
         }
 
@@ -141,7 +137,6 @@ public class BuildManager : MonoBehaviour {
         if (_resultX < 0) _resultX *= -1;
         if (_resultY < 0) _resultY *= -1;
 
-        Debug.Log("_resultX : " + _resultX + " _resultY : " + _resultY);
         return new Vector2(_resultX, _resultY);
     }
 
