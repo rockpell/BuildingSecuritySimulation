@@ -35,21 +35,23 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) // 화면 크기 조정
         {
-            Camera.main.orthographicSize += 0.2f;
+            Camera.main.orthographicSize += 0.2f + (Camera.main.orthographicSize/50);
+            if (Camera.main.orthographicSize > 100) Camera.main.orthographicSize = 100;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            Camera.main.orthographicSize -= 0.2f;
+            Camera.main.orthographicSize -= 0.2f + (Camera.main.orthographicSize / 50);
+            if (Camera.main.orthographicSize < 5) Camera.main.orthographicSize = 5;
         }
 
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) // 마우스 오른쪽 버튼 또는 가운데 버튼을 이용하여 화면 이동
         {
             tempClickPosition = Input.mousePosition;
             isMouseMoveClick = true;
         }
-        if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonDown(2)) isMouseMoveClick = false;
+        if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2)) isMouseMoveClick = false;
 
         if (isMouseMoveClick)
         {
