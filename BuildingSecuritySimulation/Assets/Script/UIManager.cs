@@ -13,8 +13,8 @@ public class UIManager : MonoBehaviour {
     private Simulation simulation;
     private Character character;
 
-    private GameObject width;
-    private GameObject height;
+    private GameObject width; // 사용자가 입력한 width
+    private GameObject height; // 사용자가 입력한 height
 
     private bool isPaused = false;
     private bool isShowPallet = false;
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour {
     void Start () {
         //시뮬레이션 찾기
         simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
-        //타일 생성시 가로세로 가져오기
+        //타일 생성시 가로세로 가져오기, 사용자가 입력한 값을 가져옴
         width = CreateTileWindow.transform.GetChild(0).gameObject;
         height = CreateTileWindow.transform.GetChild(1).gameObject;
         //캐릭터 가져와야함
@@ -57,6 +57,23 @@ public class UIManager : MonoBehaviour {
         {
             Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
             tempClickPosition = Input.mousePosition;
+
+            if (Camera.main.transform.position.x < 5)
+            {
+                Camera.main.transform.position = new Vector3(5, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            } else if(Camera.main.transform.position.x > 80)
+            {
+                Camera.main.transform.position = new Vector3(80, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            }
+
+            if (Camera.main.transform.position.y > 0)
+            {
+                Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+            }
+            else if (Camera.main.transform.position.y < -150)
+            {
+                Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
+            }
         }
         
     }
