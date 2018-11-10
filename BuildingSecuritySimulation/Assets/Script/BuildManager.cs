@@ -37,14 +37,15 @@ public class BuildManager : MonoBehaviour {
             else if (Input.GetMouseButtonUp(0))
             {
                 mouseButtonUpPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition);
 
                 RaycastHit2D[] hit = Physics2D.BoxCastAll((mouseButtonDownPosition + mouseButtonUpPosition)/2,
                     BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition),
                     0, Vector2.zero);
 
                 tileArray = new Tile[hit.Length];
-
+                //Debug.Log(hit.Length);
+                //Debug.Log("mouseButtonDownPosition : " + mouseButtonDownPosition);
+                //Debug.Log("mouseButtonUpPosition : " + mouseButtonUpPosition);
                 for (int i = 0; i < hit.Length; i++)
                 {
                     tileArray[i] = hit[i].collider.GetComponent<Tile>();
@@ -53,6 +54,15 @@ public class BuildManager : MonoBehaviour {
             }
         }
 
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            DeselectTile();
+        }
+        else if (Input.GetKey(KeyCode.Delete))
+        {
+            SelectedTileChaneType(type.Blank);
+            DeselectTile();
+        }
     }
 
     public void CreateTile(int width, int height)
@@ -77,8 +87,6 @@ public class BuildManager : MonoBehaviour {
         
     }
 
-    
-
     public void ChangeTileType()
     {
 
@@ -102,21 +110,22 @@ public class BuildManager : MonoBehaviour {
     //버튼으로 호출하기위해서 오버로딩 함수 만듬
     public void SelectTileType(int tileNum)
     {
-        switch (tileNum)
-        {
-            case 0:
-                selectedType = type.Blank;
-                break;
-            case 1:
-                selectedType = type.Wall;
-                break;
-            case 2:
-                selectedType = type.Door;
-                break;
-            case 3:
-                selectedType = type.Window;
-                break;
-        }
+        //switch (tileNum)
+        //{
+        //    case 0:
+        //        selectedType = type.Blank;
+        //        break;
+        //    case 1:
+        //        selectedType = type.Wall;
+        //        break;
+        //    case 2:
+        //        selectedType = type.Door;
+        //        break;
+        //    case 3:
+        //        selectedType = type.Window;
+        //        break;
+        //}
+        selectedType = (type)tileNum;
     }
 
     public void SelectTile()
@@ -146,11 +155,21 @@ public class BuildManager : MonoBehaviour {
                 {
                     tileArray[i].Select();
                 }
-
             }
             tileArray = null;
         }
         
+    }
+    
+    private void SelectedTileChaneType(type tileType)
+    {
+        if(tileArray != null)
+        {
+            for (int i = 0; i < tileArray.Length; i++)
+            {
+                tileArray[i].SetType(tileType);
+            }
+        }
     }
 
     private Vector3 BoxSizeAbsolute(Vector3 value)
@@ -160,7 +179,10 @@ public class BuildManager : MonoBehaviour {
         _resultY = value.y;
 
         if (_resultX < 0) _resultX *= -1;
+        else if (_resultX == 0) _resultX = 0.01f;
         if (_resultY < 0) _resultY *= -1;
+        else if (_resultY == 0) _resultY = 0.01f;
+
 
         return new Vector2(_resultX, _resultY);
     }

@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour {
 
     private Vector3 tilePosition;
     private GameObject additionObject;
-    private SpriteRenderer renderer;
+    private new SpriteRenderer renderer;
 	// Use this for initialization
 	void Start () {
         renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -21,7 +21,7 @@ public class Tile : MonoBehaviour {
 		
 	}
 
-    public type GetType()
+    public new type GetType()
     {
         return tileType;
     }
