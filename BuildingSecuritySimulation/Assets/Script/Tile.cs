@@ -28,7 +28,9 @@ public class Tile : MonoBehaviour {
 
     public void SetType(type name)
     {
-
+        //11.10 타입 바꾸는거 추가 나중에 파일이름에 따라 바꿔야함
+        if(name == type.Blank) renderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
+        else renderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
     }
 
     public bool IsDetect()

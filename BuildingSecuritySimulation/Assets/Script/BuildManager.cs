@@ -20,7 +20,8 @@ public class BuildManager : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-       
+        //기본 안해주면 삭제됨
+        selectedType = type.Blank;
     }
 	
 	// Update is called once per frame
@@ -76,10 +77,7 @@ public class BuildManager : MonoBehaviour {
         
     }
 
-    public void SelectTileType(type tileType)
-    {
-
-    }
+    
 
     public void ChangeTileType()
     {
@@ -96,6 +94,31 @@ public class BuildManager : MonoBehaviour {
 
     }
 
+    public void SelectTileType(type tileType)
+    {
+        selectedType = tileType;
+    }
+
+    //버튼으로 호출하기위해서 오버로딩 함수 만듬
+    public void SelectTileType(int tileNum)
+    {
+        switch (tileNum)
+        {
+            case 0:
+                selectedType = type.Blank;
+                break;
+            case 1:
+                selectedType = type.Wall;
+                break;
+            case 2:
+                selectedType = type.Door;
+                break;
+            case 3:
+                selectedType = type.Window;
+                break;
+        }
+    }
+
     public void SelectTile()
     {
         if(tileArray != null)
@@ -105,6 +128,8 @@ public class BuildManager : MonoBehaviour {
                 if(tileArray[i] != null)
                 {
                     tileArray[i].Select();
+                    //11.10 타입 설정 추가
+                    tileArray[i].SetType(selectedType);
                 }
 
             }

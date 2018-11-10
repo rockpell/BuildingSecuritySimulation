@@ -1,1 +1,1 @@
-﻿public enum type { Black, Wall, Door, Window};
+﻿public enum type { Blank, Wall, Door, Window};
