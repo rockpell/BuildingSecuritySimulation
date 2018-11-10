@@ -93,6 +93,11 @@ public class UIManager : MonoBehaviour {
         FileManager.instance.Load();
     }
 
+    public void ObjectSelect()
+    {
+        BuildManager.instance.SetObjectSelectMode(true);
+    }
+
     public void Play()
     {
         characterSelectWindow.SetActive(true);
@@ -141,10 +146,12 @@ public class UIManager : MonoBehaviour {
         //이거 안쓸듯
     }
 
-    public void PalletSelect()
+    public void PalletSelect(int index)
     {
-
+        BuildManager.instance.SelectTileType(index);
+        BuildManager.instance.SetObjectSelectMode(false);
     }
+
     public void getNoAuthority()
     {
         character.AuthoritySelect(false);

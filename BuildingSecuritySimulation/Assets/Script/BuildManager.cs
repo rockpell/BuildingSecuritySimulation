@@ -14,6 +14,8 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonDownPosition;
     private Vector3 mouseButtonUpPosition;
 
+    private bool isObjectSelectMode;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -138,11 +140,17 @@ public class BuildManager : MonoBehaviour {
                 {
                     tileArray[i].Select();
                     //11.10 타입 설정 추가
-                    tileArray[i].SetType(selectedType);
+                    if(!isObjectSelectMode)
+                        tileArray[i].SetType(selectedType);
                 }
 
             }
         }
+    }
+
+    public void SetObjectSelectMode(bool value)
+    {
+        isObjectSelectMode = value;
     }
 
     private void DeselectTile()
