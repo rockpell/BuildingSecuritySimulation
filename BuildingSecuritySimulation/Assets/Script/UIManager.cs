@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour {
     private bool isShowPallet = false;
     private bool isClickPalletArrow = true;
     private bool isMouseMoveClick = false;
-
+    private bool isObjectSelectMode = false;
     private Vector3 tempClickPosition;
 
     // Use this for initialization
@@ -95,7 +95,16 @@ public class UIManager : MonoBehaviour {
 
     public void ObjectSelect()
     {
-        BuildManager.instance.SetObjectSelectMode(true);
+        if (!isObjectSelectMode)
+        {
+            BuildManager.instance.SetObjectSelectMode(true);
+            isObjectSelectMode = true;
+        }
+        else
+        {
+            BuildManager.instance.SetObjectSelectMode(false);
+            isObjectSelectMode = false;
+        }
     }
 
     public void Play()
@@ -210,13 +219,13 @@ public class UIManager : MonoBehaviour {
             yield return new WaitForSeconds(0.001f);
             if (!isShowPallet)
             {
-                distance -= 5;
-                rect.localPosition -= new Vector3(5, 0, 0);
+                distance -= 15;
+                rect.localPosition -= new Vector3(15, 0, 0);
             }
             else
             {
-                distance -= 5;
-                rect.localPosition += new Vector3(5, 0, 0);
+                distance -= 15;
+                rect.localPosition += new Vector3(15, 0, 0);
             }
             
         }

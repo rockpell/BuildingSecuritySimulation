@@ -33,10 +33,9 @@ public class BuildManager : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                DeselectTile();
                 mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButton(0))
             {
                 mouseButtonUpPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -53,6 +52,10 @@ public class BuildManager : MonoBehaviour {
                     tileArray[i] = hit[i].collider.GetComponent<Tile>();
                 }
                 SelectTile();
+            }
+            else if (Input.GetMouseButtonUp(0) && !isObjectSelectMode)
+            {
+                DeselectTile();
             }
         }
 
@@ -138,7 +141,7 @@ public class BuildManager : MonoBehaviour {
             {
                 if(tileArray[i] != null)
                 {
-                    tileArray[i].Select();
+                    tileArray[i].Select(true);
                     //11.10 타입 설정 추가
                     if(!isObjectSelectMode)
                         tileArray[i].SetType(selectedType);
@@ -161,7 +164,7 @@ public class BuildManager : MonoBehaviour {
             {
                 if (tileArray[i] != null)
                 {
-                    tileArray[i].Select();
+                    tileArray[i].Select(false);
                 }
             }
             tileArray = null;

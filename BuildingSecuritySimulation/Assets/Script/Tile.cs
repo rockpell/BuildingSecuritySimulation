@@ -83,17 +83,17 @@ public class Tile : MonoBehaviour {
 
     }
 
-    public void Select()
+    public void Select(bool select)
     {
-        if (isSelect)
-        {
-            spriteRenderer.color = Color.white;
-            isSelect = false;
-        }
-        else
+        if (select)
         {
             spriteRenderer.color = Color.red;
             isSelect = true;
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+            isSelect = false;
         }
     }
 
