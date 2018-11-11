@@ -66,6 +66,7 @@ public class BuildManager : MonoBehaviour {
         else if (Input.GetKey(KeyCode.Delete))
         {
             SelectedTileChaneType(type.Blank);
+            DeleteTiles();
             DeselectTile();
         }
     }
@@ -154,6 +155,28 @@ public class BuildManager : MonoBehaviour {
     public void SetObjectSelectMode(bool value)
     {
         isObjectSelectMode = value;
+    }
+
+    private void DeleteTiles()
+    {
+        if (tileArray != null)
+        {
+            for (int i = 0; i < tileArray.Length; i++)
+            {
+                if (tileArray[i] != null)
+                {
+                    if(tileArray[i].transform.childCount > 0)
+                    {
+                        for(int p = 0; p < tileArray[i].transform.childCount; p++)
+                        {
+                            Destroy(tileArray[i].transform.GetChild(p).gameObject);
+                        }
+                            
+                    }
+                }
+
+            }
+        }
     }
 
     private void DeselectTile()
