@@ -5,15 +5,15 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
     private type tileType;
     private bool tileState;
-    private bool isSecurity;
+    private bool isSecurity; // 보안시스템 설치 여부
     private bool isSelect;
 
     private Vector3 tilePosition;
     private GameObject additionObject;
-    private new SpriteRenderer renderer;
+    private SpriteRenderer spriteRenderer;
 	// Use this for initialization
 	void Start () {
-        renderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -28,9 +28,19 @@ public class Tile : MonoBehaviour {
 
     public void SetType(type name)
     {
+        tileType = name;
         //11.10 타입 바꾸는거 추가 나중에 파일이름에 따라 바꿔야함
-        if(name == type.Blank) renderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
-        else renderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
+        if (name == type.Blank) spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
+        else if (name == type.Door)
+        {
+            AddImageObject(Resources.Load<Sprite>("Sprites/door"));
+        }
+        else if (name == type.Window)
+        {
+            AddImageObject(Resources.Load<Sprite>("Sprites/window"));
+        }
+        else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
+
     }
 
     public bool IsDetect()
@@ -77,12 +87,12 @@ public class Tile : MonoBehaviour {
     {
         if (isSelect)
         {
-            renderer.color = Color.white;
+            spriteRenderer.color = Color.white;
             isSelect = false;
         }
         else
         {
-            renderer.color = Color.red;
+            spriteRenderer.color = Color.red;
             isSelect = true;
         }
     }
@@ -90,13 +100,30 @@ public class Tile : MonoBehaviour {
     private void OnMouseOver()
     {
         if(!isSelect)
-            renderer.color = Color.green;
+            spriteRenderer.color = Color.green;
     }
 
     private void OnMouseExit()
     {
         if (!isSelect)
-            renderer.color = Color.white;
+            spriteRenderer.color = Color.white;
     }
     
+    private void AddImageObject(Sprite sprite)
+    {
+        GameObject _gameObject;
+
+        if (this.transform.childCount > 0)
+        {
+            this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
+        }
+        else
+        {
+            _gameObject = new GameObject();
+            _gameObject.transform.SetParent(this.transform, false);
+            _gameObject.AddComponent<SpriteRenderer>();
+            _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+    }
 }
