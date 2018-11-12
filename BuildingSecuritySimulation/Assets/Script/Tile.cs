@@ -11,8 +11,10 @@ public class Tile : MonoBehaviour {
     private Vector3 tilePosition;
     private GameObject additionObject;
     private SpriteRenderer spriteRenderer;
-	// Use this for initialization
-	void Start () {
+    private SpriteRenderer childeSprite;                //문,창문 색깔바꾸기위한 변수
+    private bool isObjectSelectMode;                    //개체선택모드인지
+    // Use this for initialization
+    void Start () {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 	
@@ -42,7 +44,6 @@ public class Tile : MonoBehaviour {
         else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
 
     }
-
     public bool IsDetect()
     {
         return false;
@@ -83,15 +84,37 @@ public class Tile : MonoBehaviour {
 
     }
 
-    public void Select(bool select)
+    public void Select(bool select, bool isObjectSelect)
     {
+        isObjectSelectMode = isObjectSelect;
         if (select)
         {
-            spriteRenderer.color = Color.red;
-            isSelect = true;
+            if (isObjectSelect)
+            {
+                //문,창문이 있을때
+                if (transform.childCount > 0)
+                {
+                    childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+                    childeSprite.color = Color.gray;
+                }
+                spriteRenderer.color = Color.gray;
+            }
+            else
+            {
+                spriteRenderer.color = Color.red;
+                isSelect = true;
+            }
         }
         else
         {
+            if (isObjectSelect)
+            {
+                if (transform.childCount > 0)
+                {
+                    childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+                    childeSprite.color = Color.white;
+                }
+            }
             spriteRenderer.color = Color.white;
             isSelect = false;
         }
@@ -99,14 +122,18 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        if(!isSelect)
-            spriteRenderer.color = Color.green;
+        if (!isSelect)
+        {
+            if (!isObjectSelectMode) spriteRenderer.color = Color.green;
+        }
     }
 
     private void OnMouseExit()
     {
         if (!isSelect)
-            spriteRenderer.color = Color.white;
+        {
+            if(!isObjectSelectMode) spriteRenderer.color = Color.white;
+        }
     }
     
     private void AddImageObject(Sprite sprite)
@@ -125,5 +152,9 @@ public class Tile : MonoBehaviour {
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
+    }
+    public void SetIsObjectSelectModeFalse()
+    {
+        isObjectSelectMode = false;
     }
 }

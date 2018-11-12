@@ -14,7 +14,7 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonDownPosition;
     private Vector3 mouseButtonUpPosition;
 
-    private bool isObjectSelectMode;
+    private bool isObjectSelectMode;                //개체 선택 모드인지
 
     private void Awake()
     {
@@ -31,8 +31,13 @@ public class BuildManager : MonoBehaviour {
 
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !isObjectSelectMode)
             {
+                mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+            else if(Input.GetMouseButtonDown(0) && isObjectSelectMode)
+            {
+                DeselectTile();
                 mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
             else if (Input.GetMouseButton(0))
@@ -116,21 +121,6 @@ public class BuildManager : MonoBehaviour {
     //버튼으로 호출하기위해서 오버로딩 함수 만듬
     public void SelectTileType(int tileNum)
     {
-        //switch (tileNum)
-        //{
-        //    case 0:
-        //        selectedType = type.Blank;
-        //        break;
-        //    case 1:
-        //        selectedType = type.Wall;
-        //        break;
-        //    case 2:
-        //        selectedType = type.Door;
-        //        break;
-        //    case 3:
-        //        selectedType = type.Window;
-        //        break;
-        //}
         selectedType = (type)tileNum;
     }
 
@@ -142,10 +132,13 @@ public class BuildManager : MonoBehaviour {
             {
                 if(tileArray[i] != null)
                 {
-                    tileArray[i].Select(true);
+
                     //11.10 타입 설정 추가
-                    if(!isObjectSelectMode)
+                    if (!isObjectSelectMode)
+                    {
                         tileArray[i].SetType(selectedType);
+                    }
+                    tileArray[i].Select(true, isObjectSelectMode);
                 }
 
             }
@@ -187,7 +180,9 @@ public class BuildManager : MonoBehaviour {
             {
                 if (tileArray[i] != null)
                 {
-                    tileArray[i].Select(false);
+                    tileArray[i].Select(false,isObjectSelectMode);
+                    //이걸 해야지 타일의 개체선택모드가 풀림
+                    tileArray[i].SetIsObjectSelectModeFalse();
                 }
             }
             tileArray = null;
