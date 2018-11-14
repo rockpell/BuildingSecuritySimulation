@@ -15,7 +15,8 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonUpPosition;
 
     private bool isObjectSelectMode;                //개체 선택 모드인지
-
+    private bool isSetTile;                         // 타일이 설치 되었는지
+    private bool isSetSequrity;                     // 보안 시스템이 설치 되었는지
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -140,8 +141,8 @@ public class BuildManager : MonoBehaviour {
                     }
                     tileArray[i].Select(true, isObjectSelectMode);
                 }
-
             }
+            isSetTile = true;
         }
     }
 
@@ -238,5 +239,11 @@ public class BuildManager : MonoBehaviour {
         }
 
         return _result;
+    }
+
+    public bool GetIsSetTileAndSequrity()
+    {
+        if (isSetTile && isSetSequrity) return true;
+        return false;
     }
 }

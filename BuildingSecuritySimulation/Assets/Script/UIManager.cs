@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour {
     private bool isClickPalletArrow = true;
     private bool isMouseMoveClick = false;
     private bool isObjectSelectMode = false;
+
     private Vector3 tempClickPosition;
 
     // Use this for initialization
@@ -110,8 +111,11 @@ public class UIManager : MonoBehaviour {
 
     public void Play()
     {
-        characterSelectWindow.SetActive(true);
-        simulation.Play();
+       // if (BuildManager.instance.GetIsSetTileAndSequrity())
+       // {
+            characterSelectWindow.SetActive(true);
+            simulation.Play();
+        //}
     }
 
     public void Pause()
