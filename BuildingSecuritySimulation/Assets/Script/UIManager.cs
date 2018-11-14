@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour {
     void Start () {
         //시뮬레이션 찾기
         simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
+        character = simulation.GetPlayer().GetComponent<Character>();
         //타일 생성시 가로세로 가져오기, 사용자가 입력한 값을 가져옴
         width = CreateTileWindow.transform.GetChild(0).gameObject;
         height = CreateTileWindow.transform.GetChild(1).gameObject;
@@ -149,10 +150,11 @@ public class UIManager : MonoBehaviour {
     {
         if(isClickPalletArrow) StartCoroutine(MovePallet());
     }
-
-    public void CharacterSelect()
+    // 11.14 캐릭터 생성때문에 이 함수 사용 파라미터 추가
+    public void CharacterSelect(bool isAuthority)
     {
-        //이거 안쓸듯
+        simulation.CreateCharacter(isAuthority);
+        characterSelectWindow.SetActive(false);
     }
 
     public void PalletSelect(int index)
@@ -160,14 +162,18 @@ public class UIManager : MonoBehaviour {
         BuildManager.instance.SelectTileType(index);
         BuildManager.instance.SetObjectSelectMode(false);
     }
-
+    // 11.14 캐릭터 생성때문에 문제가 있음
     public void getNoAuthority()
     {
         character.AuthoritySelect(false);
+        
     }
+    // 11.14 캐릭터 생성때문에 문제가 있음
     public void getAuthority()
     {
         character.AuthoritySelect(true);
+        //simulation.CreateCharacter();
+        characterSelectWindow.SetActive(false);
     }
     public void CharacterSelectCancle()
     {

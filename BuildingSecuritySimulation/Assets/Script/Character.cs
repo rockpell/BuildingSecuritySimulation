@@ -6,11 +6,19 @@ public class Character : MonoBehaviour {
 
     private bool authority;
     public float speed = 0.2f;
-
+    private SpriteRenderer sprite;
     // Use this for initialization
     void Start () {
-        GetAuthority();
-	}
+        sprite = gameObject.GetComponent<SpriteRenderer>();
+        if (authority)
+        {
+            sprite.sprite = Resources.Load<Sprite>("Sprites/Authority");
+        }
+        else
+        {
+            sprite.sprite = Resources.Load<Sprite>("Sprites/NoAuthority");
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -53,8 +61,8 @@ public class Character : MonoBehaviour {
             Debug.Log("문열고닫고중");
         }
     }
-    public void AuthoritySelect(bool authority)
+    public void AuthoritySelect(bool isAuthority)
     {
-
+        authority = isAuthority;
     }
 }
