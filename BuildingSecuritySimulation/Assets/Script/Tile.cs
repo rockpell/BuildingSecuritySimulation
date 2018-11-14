@@ -32,16 +32,25 @@ public class Tile : MonoBehaviour {
     {
         tileType = name;
         //11.10 타입 바꾸는거 추가 나중에 파일이름에 따라 바꿔야함
-        if (name == type.Blank) spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
-        else if (name == type.Door)
+        if (name == type.Blank)
         {
-            AddImageObject(Resources.Load<Sprite>("Sprites/door"));
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
         }
-        else if (name == type.Window)
+        else
         {
-            AddImageObject(Resources.Load<Sprite>("Sprites/window"));
+            GetComponent<BoxCollider2D>().isTrigger = false;
+            if (name == type.Door)
+            {
+                AddImageObject(Resources.Load<Sprite>("Sprites/door"));
+            }
+            else if (name == type.Window)
+            {
+                AddImageObject(Resources.Load<Sprite>("Sprites/window"));
+            }
+            else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
         }
-        else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
+        
 
     }
     public bool IsDetect()
