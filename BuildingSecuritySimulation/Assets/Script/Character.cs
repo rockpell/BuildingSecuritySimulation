@@ -5,10 +5,10 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 
     private bool authority;
-    private float speed;
-    
-	// Use this for initialization
-	void Start () {
+    public float speed = 0.2f;
+
+    // Use this for initialization
+    void Start () {
         GetAuthority();
 	}
 	
@@ -19,11 +19,8 @@ public class Character : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (GetAuthority() == true)
-        {
-            Move();
-            Interaction();
-        }
+        Move();
+        Interaction();
     }
 
     public bool GetAuthority()
@@ -34,24 +31,27 @@ public class Character : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector3.up);
+            transform.Translate(Vector3.up*speed);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(Vector3.down);
+            transform.Translate(Vector3.down * speed);
             }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(Vector3.left);
+            transform.Translate(Vector3.left * speed);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(Vector3.right);
+            transform.Translate(Vector3.right * speed);
         }
     }
     public void Interaction()
     {
-
+        if (Input.GetKey(KeyCode.F))
+        {
+            Debug.Log("문열고닫고중");
+        }
     }
     public void AuthoritySelect(bool authority)
     {
