@@ -97,16 +97,13 @@ public class UIManager : MonoBehaviour {
 
     public void ObjectSelect()
     {
-        if (!isObjectSelectMode)
-        {
-            BuildManager.instance.SetObjectSelectMode(true);
-            isObjectSelectMode = true;
-        }
-        else
-        {
-            BuildManager.instance.SetObjectSelectMode(false);
-            isObjectSelectMode = false;
-        }
+        BuildManager.instance.SetObjectSelectMode(true);
+        isObjectSelectMode = true;
+        //else
+        //{
+        //    BuildManager.instance.SetObjectSelectMode(false);
+        //    isObjectSelectMode = false;
+        //}
     }
 
     public void Play()
@@ -163,6 +160,7 @@ public class UIManager : MonoBehaviour {
 
     public void PalletSelect(int index)
     {
+        if (isObjectSelectMode) ObjectDiselect(); // 팔레트의 타일을 선택하면 개체선택모드 해제
         BuildManager.instance.SelectTileType(index);
         BuildManager.instance.SetObjectSelectMode(false);
     }
@@ -243,5 +241,11 @@ public class UIManager : MonoBehaviour {
         isClickPalletArrow = true;
         if (isShowPallet) isShowPallet = false;
         else isShowPallet = true;
+    }
+
+    private void ObjectDiselect()
+    {
+        BuildManager.instance.SetObjectSelectMode(false);
+        isObjectSelectMode = false;
     }
 }

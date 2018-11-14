@@ -149,6 +149,7 @@ public class BuildManager : MonoBehaviour {
     public void SetObjectSelectMode(bool value)
     {
         isObjectSelectMode = value;
+        DeselectTile(true);
     }
 
     private void DeleteTiles()
@@ -175,22 +176,26 @@ public class BuildManager : MonoBehaviour {
 
     private void DeselectTile()
     {
+        DeselectTile(isObjectSelectMode);
+    }
+    private void DeselectTile(bool isObjectSelectMode)
+    {
         if (tileArray != null)
         {
             for (int i = 0; i < tileArray.Length; i++)
             {
                 if (tileArray[i] != null)
                 {
-                    tileArray[i].Select(false,isObjectSelectMode);
+                    tileArray[i].Select(false, isObjectSelectMode);
                     //이걸 해야지 타일의 개체선택모드가 풀림
                     tileArray[i].SetIsObjectSelectModeFalse();
                 }
             }
             tileArray = null;
         }
-        
     }
-    
+
+
     private void SelectedTileChaneType(type tileType)
     {
         if(tileArray != null)
