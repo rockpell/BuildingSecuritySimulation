@@ -43,12 +43,12 @@ public class Tile : MonoBehaviour {
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (name == type.Door)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/door"));
+                AddImageObject(Resources.Load<Sprite>("Sprites/door"), "Door");
                 tileType = name;
             }
             else if (name == type.Window)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/window"));
+                AddImageObject(Resources.Load<Sprite>("Sprites/window"), "Window");
                 tileType = name;
             }
             else if (name == type.Wall)
@@ -166,7 +166,7 @@ public class Tile : MonoBehaviour {
         }
     }
     
-    private void AddImageObject(Sprite sprite)
+    private void AddImageObject(Sprite sprite, string tag)
     {
         GameObject _gameObject;
 
@@ -182,6 +182,7 @@ public class Tile : MonoBehaviour {
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
             _gameObject.AddComponent<BoxCollider2D>();
+            _gameObject.tag = "Window";
         }
     }
     public void SetIsObjectSelectModeFalse()
