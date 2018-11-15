@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour {
     private GameObject additionObject;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer childeSprite;                //문,창문 색깔바꾸기위한 변수
+    private UIManager uIManager;
     private bool isObjectSelectMode;                    //개체선택모드인지
     // Use this for initialization
     void Start () {
@@ -30,12 +31,12 @@ public class Tile : MonoBehaviour {
 
     public void SetType(type name)
     {
-        tileType = name;
-        //11.10 타입 바꾸는거 추가 나중에 파일이름에 따라 바꿔야함
+        
         if (name == type.Blank)
         {
             GetComponent<BoxCollider2D>().isTrigger = true;
             spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
+            tileType = name;
         }
         else
         {
@@ -43,15 +44,35 @@ public class Tile : MonoBehaviour {
             if (name == type.Door)
             {
                 AddImageObject(Resources.Load<Sprite>("Sprites/door"));
+                tileType = name;
             }
             else if (name == type.Window)
             {
                 AddImageObject(Resources.Load<Sprite>("Sprites/window"));
+                tileType = name;
             }
-            else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/test" + name.ToString());
+            else if (name == type.Wall)
+            {
+                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/wall");
+                tileType = name;
+            }
+            else
+            {
+                if (tileType == type.Door || tileType == type.Window)
+                {
+                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/arrow");
+                    GetComponent<BoxCollider2D>().isTrigger = true;
+                    childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+                    childeSprite.color = Color.red;
+                }
+                else
+                {
+                    uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+                    uIManager.StartCoroutine(uIManager.ShowErrorMessage("벽에는 보안시스템을 설치 할 수 없습니다."));
+                }
+            }
         }
         
-
     }
     public bool IsDetect()
     {
@@ -160,6 +181,7 @@ public class Tile : MonoBehaviour {
             _gameObject.AddComponent<SpriteRenderer>();
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
+            _gameObject.AddComponent<BoxCollider2D>();
         }
     }
     public void SetIsObjectSelectModeFalse()

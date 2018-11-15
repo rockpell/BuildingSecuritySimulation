@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject CreateTileWindow;
     [SerializeField] private GameObject Pallet;
     [SerializeField] private Text warningText;
-    
+    [SerializeField] private Text ErrorMessage;
     private Simulation simulation;
     private Character character;
 
@@ -247,5 +247,12 @@ public class UIManager : MonoBehaviour {
     {
         BuildManager.instance.SetObjectSelectMode(false);
         isObjectSelectMode = false;
+    }
+    public IEnumerator ShowErrorMessage(string errorMessage)
+    {
+        ErrorMessage.text = errorMessage;
+        ErrorMessage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        ErrorMessage.gameObject.SetActive(false);
     }
 }
