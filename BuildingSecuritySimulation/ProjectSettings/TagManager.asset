@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Door
   - Window
+  - Sequrity
   layers:
   - Default
   - TransparentFX

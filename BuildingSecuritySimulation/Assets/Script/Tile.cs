@@ -43,12 +43,12 @@ public class Tile : MonoBehaviour {
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (name == type.Door)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/door"), "Door");
+                AddImageObject(Resources.Load<Sprite>("Sprites/door"), 1, true, "Door");
                 tileType = name;
             }
             else if (name == type.Window)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/window"), "Window");
+                AddImageObject(Resources.Load<Sprite>("Sprites/window"), 1, true, "Window");
                 tileType = name;
             }
             else if (name == type.Wall)
@@ -60,10 +60,7 @@ public class Tile : MonoBehaviour {
             {
                 if (tileType == type.Door || tileType == type.Window)
                 {
-                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/arrow");
-                    GetComponent<BoxCollider2D>().isTrigger = true;
-                    childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-                    childeSprite.color = Color.red;
+                    AddImageObject(Resources.Load<Sprite>("Sprites/arrow"), 2, false, "Sequrity");
                 }
                 else
                 {
@@ -166,7 +163,7 @@ public class Tile : MonoBehaviour {
         }
     }
     
-    private void AddImageObject(Sprite sprite, string tag)
+    private void AddImageObject(Sprite sprite, int sortingOrder, bool makeCollider, string tag)
     {
         GameObject _gameObject;
 
@@ -180,9 +177,9 @@ public class Tile : MonoBehaviour {
             _gameObject.transform.SetParent(this.transform, false);
             _gameObject.AddComponent<SpriteRenderer>();
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-            _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
-            _gameObject.AddComponent<BoxCollider2D>();
-            _gameObject.tag = "Window";
+            _gameObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            _gameObject.tag = tag;
+            if (makeCollider) _gameObject.AddComponent<BoxCollider2D>();
         }
     }
     public void SetIsObjectSelectModeFalse()
