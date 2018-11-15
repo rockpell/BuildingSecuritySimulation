@@ -60,7 +60,7 @@ public class Tile : MonoBehaviour {
             {
                 if (tileType == type.Door || tileType == type.Window)
                 {
-                    AddImageObject(Resources.Load<Sprite>("Sprites/arrow"), 2, false, "Sequrity");
+                    AddImageObject(Resources.Load<Sprite>("Sprites/siren"), 2, false, "Sequrity");
                 }
                 else
                 {
