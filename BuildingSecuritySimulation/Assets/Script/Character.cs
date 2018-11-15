@@ -9,6 +9,7 @@ public class Character : MonoBehaviour {
     private SpriteRenderer sprite;
     // Use this for initialization
     void Start () {
+         Camera.main.orthographicSize = 5;
         sprite = gameObject.GetComponent<SpriteRenderer>();
         if (authority)
         {
@@ -31,7 +32,7 @@ public class Character : MonoBehaviour {
     {
         Move();
         Vector3 camPos = transform.position;
-        camPos.z = -5;
+        camPos.z = -1;
         Camera.main.transform.position = camPos;
     }
 

@@ -8,11 +8,15 @@ public class Simulation : MonoBehaviour {
     private bool isPlaying;
     private bool isPaused;
     [SerializeField] private GameObject player;
+    private GameObject playTmp;
     //11.14 파라미터 추가
     public void CreateCharacter(bool isAuthority)
     {
-        GameObject playTmp = Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
-        playTmp.SendMessage("AuthoritySelect", isAuthority);
+        if (playTmp == null)
+        {
+            playTmp = Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
+            playTmp.SendMessage("AuthoritySelect", isAuthority);
+        }
     }
     public void Play()
     {
@@ -34,6 +38,7 @@ public class Simulation : MonoBehaviour {
     public void Stop()
     {
         isPlaying = false;
+        Destroy(playTmp);
     }
     public void SaveLog()
     {

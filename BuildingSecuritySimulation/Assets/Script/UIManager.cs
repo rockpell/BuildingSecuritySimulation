@@ -113,12 +113,16 @@ public class UIManager : MonoBehaviour {
 
     public void Play()
     {
-       // if (BuildManager.instance.GetIsSetTileAndSequrity())
-       // {
+        if (/*BuildManager.instance.GetIsSetTileAndSequrity() &&*/ !simulation.GetIsPlaying())
+        {
             characterSelectWindow.SetActive(true);
             Pallet.SetActive(false);
             simulation.Play();
-        //}
+        }
+        else
+        {
+            StartCoroutine(ShowErrorMessage("이미 시뮬레이션이 동작중입니다."));
+        }
     }
 
     public void Pause()
