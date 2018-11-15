@@ -65,4 +65,11 @@ public class Character : MonoBehaviour {
     {
         authority = isAuthority;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "Window" || collision.transform.tag == "Window")
+        {
+
+        }
+    }
 }
