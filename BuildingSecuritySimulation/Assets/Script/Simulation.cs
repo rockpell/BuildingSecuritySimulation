@@ -47,4 +47,12 @@ public class Simulation : MonoBehaviour {
     {
         return player;
     }
+    public bool GetIsPlaying()
+    {
+        return isPlaying;
+    }
+    public bool GetIsPaused()
+    {
+        return isPaused;
+    }
 }

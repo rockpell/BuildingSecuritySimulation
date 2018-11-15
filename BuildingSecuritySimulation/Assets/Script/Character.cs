@@ -21,14 +21,18 @@ public class Character : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        
+        Interaction();
+    }
 
     void FixedUpdate()
     {
         Move();
-        Interaction();
+        Vector3 camPos = transform.position;
+        camPos.z = -5;
+        Camera.main.transform.position = camPos;
     }
 
     public bool GetAuthority()

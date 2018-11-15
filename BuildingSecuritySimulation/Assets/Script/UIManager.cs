@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject Pallet;
     [SerializeField] private Text warningText;
     [SerializeField] private Text ErrorMessage;
+    [SerializeField] private GameObject LogWindow;
     private Simulation simulation;
     private Character character;
 
@@ -82,21 +83,25 @@ public class UIManager : MonoBehaviour {
 
     public void CreateTile()
     {
+        if (simulation.GetIsPlaying()) return;
         CreateTileWindow.SetActive(true);
     }
 
     public void Save()
     {
+        if (simulation.GetIsPlaying()) return;
         FileManager.instance.Save();
     }
 
     public void Load()
     {
+        if (simulation.GetIsPlaying()) return;
         FileManager.instance.Load();
     }
 
     public void ObjectSelect()
     {
+        if (simulation.GetIsPlaying()) return;
         BuildManager.instance.SetObjectSelectMode(true);
         isObjectSelectMode = true;
         //else
@@ -111,12 +116,14 @@ public class UIManager : MonoBehaviour {
        // if (BuildManager.instance.GetIsSetTileAndSequrity())
        // {
             characterSelectWindow.SetActive(true);
+            Pallet.SetActive(false);
             simulation.Play();
         //}
     }
 
     public void Pause()
     {
+        if (!simulation.GetIsPlaying()) return;
         //나중에 수정 필요
         if (!isPaused)
         {
@@ -134,6 +141,8 @@ public class UIManager : MonoBehaviour {
     public void Stop()
     {
         simulation.Stop();
+        LogWindow.SetActive(false);
+        Pallet.SetActive(true);
     }
 
     public void Exit()
@@ -156,6 +165,7 @@ public class UIManager : MonoBehaviour {
     {
         simulation.CreateCharacter(isAuthority);
         characterSelectWindow.SetActive(false);
+        LogWindow.SetActive(true);
     }
 
     public void PalletSelect(int index)
