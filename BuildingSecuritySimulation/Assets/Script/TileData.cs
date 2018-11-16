@@ -1,42 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[SerializeField]
+[Serializable]
 public class TileData {
-    //public Vector3 position;
+    public Vector3 position;
     public int tileType;
     public bool state;
     public bool isSecurity;
+    public int[] test;
 
-    //public TileData(Vector3 position, type tileType, bool state, bool isSecurity)
-    //{
-    //    this.position = position;
-    //    this.tileType = tileType;
-    //    this.state = state;
-    //    this.isSecurity = isSecurity;
-    //}
-
-    public TileData(type tileType, bool state, bool isSecurity)
+    public TileData(Vector3 position, type tileType, bool state, bool isSecurity)
     {
+        this.position = position;
         this.tileType = (int)tileType;
         this.state = state;
         this.isSecurity = isSecurity;
     }
+
+    //public TileData(type tileType, bool state, bool isSecurity)
+    //{
+    //    this.tileType = (int)tileType;
+    //    this.state = state;
+    //    this.isSecurity = isSecurity;
+    //}
 }
 
-[SerializeField]
+[Serializable]
 public class Test
 {
-    public TileData tileData;
+    public List<TileData> tileList;
 
-    public Test(TileData value)
+    public Test(List<TileData> value)
     {
-        this.tileData = value;
+        this.tileList = value;
     }
 }
 
-[SerializeField]
+[Serializable]
 public class JsonWrapper
 {
     public TileData[] tiledatas;
