@@ -179,7 +179,7 @@ public class Tile : MonoBehaviour {
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
             _gameObject.tag = tag;
-            if (makeCollider) _gameObject.AddComponent<BoxCollider2D>();
+            //if (makeCollider) _gameObject.AddComponent<BoxCollider2D>();
         }
     }
     public void SetIsObjectSelectModeFalse()
