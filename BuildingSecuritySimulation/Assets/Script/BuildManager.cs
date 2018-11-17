@@ -14,9 +14,15 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonDownPosition;
     private Vector3 mouseButtonUpPosition;
 
+    private Sprite normalTileSprite;
+    private Sprite doorTileSprite;
+    private Sprite windowTileSprite;
+    private Sprite wallTileSprite;
+
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
     private bool isSetSequrity;                     // 보안 시스템이 설치 되었는지
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -25,6 +31,11 @@ public class BuildManager : MonoBehaviour {
     void Start () {
         //기본 안해주면 삭제됨
         selectedType = type.Blank;
+
+        normalTileSprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
+        wallTileSprite = Resources.Load<Sprite>("Sprites/wall");
+        doorTileSprite = Resources.Load<Sprite>("Sprites/door");
+        windowTileSprite = Resources.Load<Sprite>("Sprites/window");
     }
 	
 	// Update is called once per frame
@@ -109,9 +120,18 @@ public class BuildManager : MonoBehaviour {
 
     }
 
-    public void LoadCreateTile(string loadData)
+    public void LoadCreateTile(TileData[] tileDatas)
     {
+        GameObject _nomarlTile = Resources.Load<GameObject>("Prefabs/nomarl_tile");
 
+        for (int i = 0; i < tileDatas.Length; i++)
+        {
+            GameObject _tempObject = Instantiate(_nomarlTile, tileDatas[i].position, Quaternion.identity, tiles);
+            Tile _tempTile = _tempObject.GetComponent<Tile>();
+            _tempTile.SetType((type)tileDatas[i].tileType);
+            _tempTile.SetIsSecurity(tileDatas[i].isSecurity);
+            _tempTile.SetState(tileDatas[i].state);
+        }
     }
 
     public void SelectTileType(type tileType)
@@ -150,6 +170,26 @@ public class BuildManager : MonoBehaviour {
     {
         isObjectSelectMode = value;
         DeselectTile(true);
+    }
+
+    public Sprite GetNormalTileSprite()
+    {
+        return normalTileSprite;
+    }
+
+    public Sprite GetWallTileSprite()
+    {
+        return wallTileSprite;
+    }
+
+    public Sprite GetDoorTileSprite()
+    {
+        return doorTileSprite;
+    }
+
+    public Sprite GetWindowTileSprite()
+    {
+        return windowTileSprite;
     }
 
     private void DeleteTiles()

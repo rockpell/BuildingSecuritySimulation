@@ -43,10 +43,20 @@ public class FileManager : MonoBehaviour {
 
         Debug.Log(_resultJson);
     }
-    public void Load()
-    { 
 
+    public void Load()
+    {
+        string _loadData = File.ReadAllText(Application.dataPath + "/Player.json");
+
+        if(_loadData != null)
+        {
+            jsonWrapper = JsonUtility.FromJson<JsonWrapper>(_loadData);
+
+            BuildManager.instance.LoadCreateTile(jsonWrapper.tiledatas); // 로드한 데이터를 오브젝트로 제작
+            Debug.Log(jsonWrapper.tiledatas.Length);
+        }
     }
+
     public void SaveLog()
     {
 

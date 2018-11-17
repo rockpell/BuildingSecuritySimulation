@@ -9,7 +9,6 @@ public class TileData {
     public int tileType;
     public bool state;
     public bool isSecurity;
-    public int[] test;
 
     public TileData(Vector3 position, type tileType, bool state, bool isSecurity)
     {
