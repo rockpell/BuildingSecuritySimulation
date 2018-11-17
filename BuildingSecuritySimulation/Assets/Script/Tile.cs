@@ -35,7 +35,7 @@ public class Tile : MonoBehaviour {
         if (name == type.Blank)
         {
             GetComponent<BoxCollider2D>().isTrigger = true;
-            spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
+            GetComponent<SpriteRenderer>().sprite = BuildManager.instance.GetNormalTileSprite();
             tileType = name;
         }
         else
@@ -43,17 +43,17 @@ public class Tile : MonoBehaviour {
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (name == type.Door)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/door"), 1, true, "Door");
+                AddImageObject(BuildManager.instance.GetDoorTileSprite(), 1, true, "Door");
                 tileType = name;
             }
             else if (name == type.Window)
             {
-                AddImageObject(Resources.Load<Sprite>("Sprites/window"), 1, true, "Window");
+                AddImageObject(BuildManager.instance.GetWindowTileSprite(), 1, true, "Window");
                 tileType = name;
             }
             else if (name == type.Wall)
             {
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/wall");
+                GetComponent<SpriteRenderer>().sprite = BuildManager.instance.GetWallTileSprite();
                 tileType = name;
             }
             else
