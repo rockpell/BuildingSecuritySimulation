@@ -90,13 +90,17 @@ public class UIManager : MonoBehaviour {
     public void Save()
     {
         if (simulation.GetIsPlaying()) return;
-        FileManager.instance.Save();
+        FileManager.instance.IsFileBrowsing = true;
+        FileManager.instance.IsSaveFile = true;
+        //FileManager.instance.Save();
     }
 
     public void Load()
     {
         if (simulation.GetIsPlaying()) return;
-        FileManager.instance.Load();
+        FileManager.instance.IsFileBrowsing = true;
+        FileManager.instance.IsSaveFile = false;
+        //FileManager.instance.Load();
     }
 
     public void ObjectSelect()
