@@ -1208,7 +1208,7 @@ MonoBehaviour:
   InteractionObject: {fileID: 2144693712}
   fileBrowserPanel: {fileID: 1642971715}
   time: {fileID: 873526859}
-  exitSavePanel: {fileID: 1889050231}
+  exitSavePanel: {fileID: 0}
 --- !u!4 &305076487
 Transform:
   m_ObjectHideFlags: 0
@@ -3902,7 +3902,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2fc3a1069a3c28c48b8af901de449d07, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5226,7 +5226,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a51c58403dfd048a0a46826b9ace2ba1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a58ce130040bf6c4caeaf8bcfcff0ca9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

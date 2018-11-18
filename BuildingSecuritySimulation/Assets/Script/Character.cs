@@ -8,11 +8,14 @@ public class Character : MonoBehaviour {
     public float speed = 0.2f;
     private SpriteRenderer sprite;
     private List<Tile> tileList;
+    private AudioSource audio;
+    private AudioClip audioClip;
     // Use this for initialization
     void Start () {
         tileList = new List<Tile>();
-         Camera.main.orthographicSize = 7;
+        Camera.main.orthographicSize = 7;
         sprite = gameObject.GetComponent<SpriteRenderer>();
+        //audio = GameObject.Find("audio").GetComponent<AudioSource>();
         gameObject.tag = "Player";
         if (authority)
         {
