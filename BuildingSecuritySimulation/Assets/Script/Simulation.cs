@@ -48,10 +48,12 @@ public class Simulation : MonoBehaviour {
         isPlaying = false;
         Destroy(playTmp);
     }
+    //필요 없을듯
     public void SaveLog()
     {
 
     }
+    //필요 없을듯
     public void ShowLog(string tileData)
     {
 

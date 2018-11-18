@@ -337,6 +337,10 @@ public class UIManager : MonoBehaviour {
             Text logText = LogWindow.content.GetComponent<Text>();
             logText.text += securityIndex + "번 시스템위치에서 문이 열려있습니다. (" + timeString + ")\n";
             LogWindow.verticalScrollbar.value = 0;
+            if (!character.GetAuthority())
+            {
+                logText.text += securityIndex + "번 시스템위치에서 경보가 발생했습니다. (" + timeString + ")\n";
+            }
             isLogShow = true;
             StartCoroutine(ChangeIsLogShow());
         }

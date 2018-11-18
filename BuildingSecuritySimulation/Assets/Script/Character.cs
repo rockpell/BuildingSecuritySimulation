@@ -80,7 +80,6 @@ public class Character : MonoBehaviour {
     }
     public void AuthoritySelect(bool isAuthority)
     {
-
         authority = isAuthority;
     }
     public void AddTileList(Tile tile)
