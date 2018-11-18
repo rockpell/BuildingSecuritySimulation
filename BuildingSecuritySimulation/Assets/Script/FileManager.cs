@@ -54,7 +54,7 @@ public class FileManager : MonoBehaviour {
                 Debug.Log(filePath);
                 if (filePath != null)
                 {
-                    isFileBrowsing = false;
+                    CloseFileBrowser();
                     if (!isSaveFile)
                     {
                         Load();
@@ -63,7 +63,7 @@ public class FileManager : MonoBehaviour {
 
                 if (fileBrower.isSelect)
                 {
-                    isFileBrowsing = false;
+                    CloseFileBrowser();
                     if (isSaveFile)
                     {
                         filePath = fileBrower.GetNowDirectory();
@@ -71,6 +71,10 @@ public class FileManager : MonoBehaviour {
                         Debug.Log(filePath);
                         Save();
                     }
+                }
+                else
+                {
+                    CloseFileBrowser();
                 }
 
             }
@@ -131,4 +135,11 @@ public class FileManager : MonoBehaviour {
         get { return isSaveFile; }
         set { isSaveFile = value; }
     }
+
+    private void CloseFileBrowser()
+    {
+        isFileBrowsing = false;
+        GameObject.Find("UIManager").GetComponent<UIManager>().CloseFileBrowserPanel();
+    }
+
 }

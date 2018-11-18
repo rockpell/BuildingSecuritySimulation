@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Text warningText;
     [SerializeField] private Text ErrorMessage;
     [SerializeField] private GameObject LogWindow;
+    [SerializeField] private GameObject fileBrowserPanel;
+
     private Simulation simulation;
     private Character character;
 
@@ -92,6 +94,9 @@ public class UIManager : MonoBehaviour {
         if (simulation.GetIsPlaying()) return;
         FileManager.instance.IsFileBrowsing = true;
         FileManager.instance.IsSaveFile = true;
+
+        fileBrowserPanel.SetActive(true);
+
         //FileManager.instance.Save();
     }
 
@@ -100,6 +105,9 @@ public class UIManager : MonoBehaviour {
         if (simulation.GetIsPlaying()) return;
         FileManager.instance.IsFileBrowsing = true;
         FileManager.instance.IsSaveFile = false;
+
+        fileBrowserPanel.SetActive(true);
+
         //FileManager.instance.Load();
     }
 
@@ -228,6 +236,12 @@ public class UIManager : MonoBehaviour {
     {
         CreateTileWindow.SetActive(false);
     }
+
+    public void CloseFileBrowserPanel()
+    {
+        fileBrowserPanel.SetActive(false);
+    }
+
     private IEnumerator ShowWarningText()
     {
         warningText.gameObject.SetActive(true);

@@ -14,10 +14,10 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonDownPosition;
     private Vector3 mouseButtonUpPosition;
 
-    private Sprite normalTileSprite;
-    private Sprite doorTileSprite;
-    private Sprite windowTileSprite;
-    private Sprite wallTileSprite;
+    private Sprite normalTileSprite;    // 일반 타일 이미지
+    private Sprite doorTileSprite;  // 문 타일 이미지
+    private Sprite windowTileSprite;    // 창문 타일 이미지
+    private Sprite wallTileSprite;  // 벽 타일 이미지
 
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
@@ -123,7 +123,16 @@ public class BuildManager : MonoBehaviour {
     public void LoadCreateTile(TileData[] tileDatas)
     {
         GameObject _nomarlTile = Resources.Load<GameObject>("Prefabs/nomarl_tile");
+        // 이미 생성된 타일들을 삭제
+        if (tiles.childCount > 0) 
+        {
+            for(int i = 0; i < tiles.childCount; i++)
+            {
+                Destroy(tiles.GetChild(i).gameObject);
+            }
+        }
 
+        // json 데이터 기반으로 타일 생성
         for (int i = 0; i < tileDatas.Length; i++)
         {
             GameObject _tempObject = Instantiate(_nomarlTile, tileDatas[i].position, Quaternion.identity, tiles);
@@ -192,7 +201,7 @@ public class BuildManager : MonoBehaviour {
         return windowTileSprite;
     }
 
-    private void DeleteTiles()
+    private void DeleteTiles() // 선택한 타일을 지우는 함수
     {
         if (tileArray != null)
         {
