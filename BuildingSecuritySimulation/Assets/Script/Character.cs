@@ -29,7 +29,6 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
         Interaction();
     }
 
@@ -66,9 +65,8 @@ public class Character : MonoBehaviour {
     }
     public void Interaction()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("문열고닫고중");
             if(tileList.Count >0)
             {
                 for (int i = 0; i < tileList.Count; i++)
@@ -84,22 +82,16 @@ public class Character : MonoBehaviour {
     }
     public void AddTileList(Tile tile)
     {
-        Debug.Log("추가");
         if (!tileList.Contains(tile))
         {
-            Debug.Log("추가됨");
             tileList.Add(tile);
         }
-        Debug.Log(tileList.Count);
     }
     public void DeleteList(Tile tile)
     {
-        Debug.Log("삭제");
         if (tileList.Contains(tile))
         {
-            Debug.Log("삭제됨");
             tileList.Remove(tile);
         }
-        Debug.Log(tileList.Count);
     }
 }

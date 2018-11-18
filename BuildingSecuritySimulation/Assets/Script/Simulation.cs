@@ -26,6 +26,7 @@ public class Simulation : MonoBehaviour {
             playTmp = Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
             playTmp.SendMessage("AuthoritySelect", isAuthority);
             nowPlayer = playTmp.GetComponent<Character>();
+            time = 0;
         }
     }
     public void Play()

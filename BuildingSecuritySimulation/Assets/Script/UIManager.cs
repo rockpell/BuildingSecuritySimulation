@@ -51,44 +51,48 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) // 화면 크기 조정
+        if (!simulation.GetIsPlaying())
         {
-            Camera.main.orthographicSize += 0.2f + (Camera.main.orthographicSize/50);
-            if (Camera.main.orthographicSize > 100) Camera.main.orthographicSize = 100;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            Camera.main.orthographicSize -= 0.2f + (Camera.main.orthographicSize / 50);
-            if (Camera.main.orthographicSize < 5) Camera.main.orthographicSize = 5;
-        }
-
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) // 마우스 오른쪽 버튼 또는 가운데 버튼을 이용하여 화면 이동
-        {
-            tempClickPosition = Input.mousePosition;
-            isMouseMoveClick = true;
-        }
-        if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2)) isMouseMoveClick = false;
-
-        if (isMouseMoveClick)
-        {
-            Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
-            tempClickPosition = Input.mousePosition;
-
-            if (Camera.main.transform.position.x < 5)
+            if (Input.GetAxis("Mouse ScrollWheel") < 0) // 화면 크기 조정
             {
-                Camera.main.transform.position = new Vector3(5, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            } else if(Camera.main.transform.position.x > 80)
+                Camera.main.orthographicSize += 0.2f + (Camera.main.orthographicSize / 50);
+                if (Camera.main.orthographicSize > 100) Camera.main.orthographicSize = 100;
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                Camera.main.transform.position = new Vector3(80, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                Camera.main.orthographicSize -= 0.2f + (Camera.main.orthographicSize / 50);
+                if (Camera.main.orthographicSize < 5) Camera.main.orthographicSize = 5;
             }
 
-            if (Camera.main.transform.position.y > 0)
+            if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) // 마우스 오른쪽 버튼 또는 가운데 버튼을 이용하여 화면 이동
             {
-                Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+                tempClickPosition = Input.mousePosition;
+                isMouseMoveClick = true;
             }
-            else if (Camera.main.transform.position.y < -150)
+            if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2)) isMouseMoveClick = false;
+
+            if (isMouseMoveClick)
             {
-                Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
+                Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
+                tempClickPosition = Input.mousePosition;
+
+                if (Camera.main.transform.position.x < 5)
+                {
+                    Camera.main.transform.position = new Vector3(5, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                }
+                else if (Camera.main.transform.position.x > 80)
+                {
+                    Camera.main.transform.position = new Vector3(80, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                }
+
+                if (Camera.main.transform.position.y > 0)
+                {
+                    Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+                }
+                else if (Camera.main.transform.position.y < -150)
+                {
+                    Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
+                }
             }
         }
         if (isCharacterAuthoritySelect)
@@ -157,16 +161,24 @@ public class UIManager : MonoBehaviour {
 
     public void Play()
     {
-        if (BuildManager.instance.GetIsSetTileAndSecurity() && !simulation.GetIsPlaying())
+        if (BuildManager.instance.GetIsSetTileAndSecurity())
         {
-            characterSelectWindow.SetActive(true);
-            Pallet.SetActive(false);
-            simulation.Play();
+            if (!simulation.GetIsPlaying())
+            {
+                characterSelectWindow.SetActive(true);
+                Pallet.SetActive(false);
+                simulation.Play();
+            }
+            else
+            {
+                StartCoroutine(ShowErrorMessage("이미 시뮬레이션이 동작중입니다."));
+            }
         }
         else
         {
-            StartCoroutine(ShowErrorMessage("이미 시뮬레이션이 동작중입니다."));
+            StartCoroutine(ShowErrorMessage("벽과 보안시스템이 설치가 되어있지 않습니다."));
         }
+        BuildManager.instance.SelectTileType(type.Blank);
         logText.text = "";
     }
 
@@ -193,6 +205,8 @@ public class UIManager : MonoBehaviour {
         LogWindow.gameObject.SetActive(false);
         Pallet.SetActive(true);
         isCharacterAuthoritySelect = false;
+        time.gameObject.SetActive(false);
+        time.text = "";
     }
 
     public void Exit()
@@ -329,7 +343,7 @@ public class UIManager : MonoBehaviour {
             Debug.Log(simulation.GetPlayer().GetAuthority());
             if (!simulation.GetPlayer().GetAuthority())
             {
-                logText.text += securityIndex + openText + " (" + timeString + ")\n";
+                logText.text += securityIndex +"번 시스템위치에서 경보가 발생했습니다. (" + timeString + ")\n";
             }
             isLogShow = true;
             StartCoroutine(ChangeIsLogShow());

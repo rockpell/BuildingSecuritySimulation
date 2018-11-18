@@ -19,7 +19,7 @@ public class BuildManager : MonoBehaviour {
     private Sprite windowTileSprite;    // 창문 타일 이미지
     private Sprite wallTileSprite;  // 벽 타일 이미지
     private Sprite securitySprite;  // 벽 타일 이미지
-
+    private Simulation simulation;
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
     private bool isSetSecurity;                     // 보안 시스템이 설치 되었는지
@@ -32,7 +32,7 @@ public class BuildManager : MonoBehaviour {
     void Start () {
         //기본 안해주면 삭제됨
         selectedType = type.Blank;
-
+        simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
         normalTileSprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
         wallTileSprite = Resources.Load<Sprite>("Sprites/wall");
         doorTileSprite = Resources.Load<Sprite>("Sprites/door");
@@ -42,51 +42,53 @@ public class BuildManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (EventSystem.current.IsPointerOverGameObject() == false)
+        if (!simulation.GetIsPlaying())
         {
-            if (Input.GetMouseButtonDown(0) && !isObjectSelectMode)
+            if (EventSystem.current.IsPointerOverGameObject() == false)
             {
-                mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else if(Input.GetMouseButtonDown(0) && isObjectSelectMode)
-            {
-                DeselectTile();
-                mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                mouseButtonUpPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                RaycastHit2D[] hit = Physics2D.BoxCastAll((mouseButtonDownPosition + mouseButtonUpPosition)/2,
-                    BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition),
-                    0, Vector2.zero);
-
-                tileArray = new Tile[hit.Length];
-                //Debug.Log(hit.Length);
-                //Debug.Log("mouseButtonDownPosition : " + mouseButtonDownPosition);
-                //Debug.Log("mouseButtonUpPosition : " + mouseButtonUpPosition);
-                for (int i = 0; i < hit.Length; i++)
+                if (Input.GetMouseButtonDown(0) && !isObjectSelectMode)
                 {
-                    tileArray[i] = hit[i].collider.GetComponent<Tile>();
+                    mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 }
-                SelectTile();
+                else if (Input.GetMouseButtonDown(0) && isObjectSelectMode)
+                {
+                    DeselectTile();
+                    mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                }
+                else if (Input.GetMouseButton(0))
+                {
+                    mouseButtonUpPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    RaycastHit2D[] hit = Physics2D.BoxCastAll((mouseButtonDownPosition + mouseButtonUpPosition) / 2,
+                        BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition),
+                        0, Vector2.zero);
+
+                    tileArray = new Tile[hit.Length];
+                    //Debug.Log(hit.Length);
+                    //Debug.Log("mouseButtonDownPosition : " + mouseButtonDownPosition);
+                    //Debug.Log("mouseButtonUpPosition : " + mouseButtonUpPosition);
+                    for (int i = 0; i < hit.Length; i++)
+                    {
+                        tileArray[i] = hit[i].collider.GetComponent<Tile>();
+                    }
+                    SelectTile();
+                }
+                else if (Input.GetMouseButtonUp(0) && !isObjectSelectMode)
+                {
+                    DeselectTile();
+                }
             }
-            else if (Input.GetMouseButtonUp(0) && !isObjectSelectMode)
+
+            if (Input.GetKey(KeyCode.Escape))
             {
                 DeselectTile();
             }
-        }
-
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            DeselectTile();
-        }
-        else if (Input.GetKey(KeyCode.Delete))
-        {
-            SelectedTileChaneType(type.Blank);
-            DeleteTiles();
-            DeselectTile();
+            else if (Input.GetKey(KeyCode.Delete))
+            {
+                SelectedTileChaneType(type.Blank);
+                DeleteTiles();
+                DeselectTile();
+            }
         }
     }
 
@@ -111,7 +113,7 @@ public class BuildManager : MonoBehaviour {
         }
         
     }
-
+    
     public void ChangeTileType()
     {
 
