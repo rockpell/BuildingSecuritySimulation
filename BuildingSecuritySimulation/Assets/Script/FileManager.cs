@@ -121,9 +121,9 @@ public class FileManager : MonoBehaviour {
         }
     }
 
-    public void SaveLog()
+    public void SaveLog(string data)
     {
-
+        
     }
 
     public bool IsFileBrowsing {
