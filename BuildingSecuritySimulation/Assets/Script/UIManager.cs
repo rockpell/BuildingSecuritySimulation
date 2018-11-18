@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject InteractionObject;
     [SerializeField] private GameObject fileBrowserPanel;
     [SerializeField] private Text time;
+    [SerializeField] private GameObject exitSavePanel;
     private Simulation simulation;
     private Character character;
 
@@ -195,8 +196,12 @@ public class UIManager : MonoBehaviour {
 
     public void Exit()
     {
+        if (simulation.GetIsPlaying()) return;
         //파일 저장할지 않할지 창 띄워야함
-        Application.Quit();
+        characterSelectWindow.SetActive(false);
+        CreateTileWindow.SetActive(false);
+        exitSavePanel.SetActive(true);
+        //Application.Quit();
     }
 
     public void ShowLog()
@@ -338,5 +343,10 @@ public class UIManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         isLogShow = false;
+    }
+
+    public void ApplicationQuit()
+    {
+        Application.Quit();
     }
 }
