@@ -315,4 +315,8 @@ public class BuildManager : MonoBehaviour {
     {
         securityIndex++;
     }
+    public void ResetSecurityIndex()
+    {
+        securityIndex = 0;
+    }
 }
