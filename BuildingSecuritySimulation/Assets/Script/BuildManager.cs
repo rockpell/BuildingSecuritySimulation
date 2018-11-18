@@ -124,6 +124,7 @@ public class BuildManager : MonoBehaviour {
 
     public void LoadCreateTile(TileData[] tileDatas)
     {
+        ResetSecurityIndex();
         GameObject _nomarlTile = Resources.Load<GameObject>("Prefabs/nomarl_tile");
         // 이미 생성된 타일들을 삭제
         if (tiles.childCount > 0) 
@@ -317,6 +318,6 @@ public class BuildManager : MonoBehaviour {
     }
     public void ResetSecurityIndex()
     {
-        securityIndex = 0;
+        securityIndex = 1;
     }
 }

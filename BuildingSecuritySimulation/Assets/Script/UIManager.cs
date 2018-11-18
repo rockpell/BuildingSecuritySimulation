@@ -268,6 +268,8 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(ShowWarningText());
         }
+
+        BuildManager.instance.ResetSecurityIndex();
     }
     public void CreateTileCancle()
     {
