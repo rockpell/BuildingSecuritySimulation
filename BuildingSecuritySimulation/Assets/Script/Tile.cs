@@ -219,6 +219,7 @@ public class Tile : MonoBehaviour {
             meshtmp.sortingOrder = 3;
             BuildManager.instance.IncreaseSecurityIndex();
             BuildManager.instance.SettingSecurity();
+            isSecurity = true; // 보안 설치 유무 변경
         }
     }
 
