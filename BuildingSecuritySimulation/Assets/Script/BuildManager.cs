@@ -18,12 +18,12 @@ public class BuildManager : MonoBehaviour {
     private Sprite doorTileSprite;  // 문 타일 이미지
     private Sprite windowTileSprite;    // 창문 타일 이미지
     private Sprite wallTileSprite;  // 벽 타일 이미지
-    private Sprite sequritySprite;  // 벽 타일 이미지
+    private Sprite securitySprite;  // 벽 타일 이미지
 
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
-    private bool isSetSequrity;                     // 보안 시스템이 설치 되었는지
-
+    private bool isSetSecurity;                     // 보안 시스템이 설치 되었는지
+    private int securityIndex = 1;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -37,7 +37,7 @@ public class BuildManager : MonoBehaviour {
         wallTileSprite = Resources.Load<Sprite>("Sprites/wall");
         doorTileSprite = Resources.Load<Sprite>("Sprites/door");
         windowTileSprite = Resources.Load<Sprite>("Sprites/window");
-        sequritySprite = Resources.Load<Sprite>("Sprites/siren");
+        securitySprite = Resources.Load<Sprite>("Sprites/siren");
     }
 	
 	// Update is called once per frame
@@ -119,7 +119,7 @@ public class BuildManager : MonoBehaviour {
 
     public void SettingSecurity()
     {
-
+        isSetSecurity = true;
     }
 
     public void LoadCreateTile(TileData[] tileDatas)
@@ -203,9 +203,9 @@ public class BuildManager : MonoBehaviour {
         return windowTileSprite;
     }
 
-    public Sprite GetSequritySprite()
+    public Sprite GetSecuritySprite()
     {
-        return sequritySprite;
+        return securitySprite;
     }
     private void DeleteTiles() // 선택한 타일을 지우는 함수
     {
@@ -219,6 +219,7 @@ public class BuildManager : MonoBehaviour {
                     {
                         for(int p = 0; p < tileArray[i].transform.childCount; p++)
                         {
+                            tileArray[i].SetIsSecurity(false);
                             Destroy(tileArray[i].transform.GetChild(p).gameObject);
                         }
                             
@@ -301,9 +302,17 @@ public class BuildManager : MonoBehaviour {
         return _result;
     }
 
-    public bool GetIsSetTileAndSequrity()
+    public bool GetIsSetTileAndSecurity()
     {
-        if (isSetTile && isSetSequrity) return true;
+        if (isSetTile && isSetSecurity) return true;
         return false;
+    }
+    public int GetSecurityIndex()
+    {
+        return securityIndex;
+    }
+    public void IncreaseSecurityIndex()
+    {
+        securityIndex++;
     }
 }

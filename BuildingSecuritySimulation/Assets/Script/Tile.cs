@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer childeSprite;                //문,창문 색깔바꾸기위한 변수
     private bool isObjectSelectMode;                    //개체선택모드인지
+    private int securityNum = 0;
     // Use this for initialization
     void Start () {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -59,7 +60,7 @@ public class Tile : MonoBehaviour {
             {
                 if (tileType == type.Door || tileType == type.Window)
                 {
-                    AddSequrity(BuildManager.instance.GetSequritySprite());
+                    AddSecurity(BuildManager.instance.GetSecuritySprite());
                 }
                 else
                 {
@@ -91,9 +92,13 @@ public class Tile : MonoBehaviour {
 
     public void SetIsSecurity(bool isSecurity)
     {
-
+        this.isSecurity = isSecurity;
+        if (isSecurity)
+        {
+            AddSecurity(BuildManager.instance.GetSecuritySprite());
+        }
     }
-
+    //개필요없음
     public void SetPosition(Vector3 pos)
     {
 
@@ -109,10 +114,14 @@ public class Tile : MonoBehaviour {
         if (GetComponent<BoxCollider2D>().isTrigger)
         {
             GetComponent<BoxCollider2D>().isTrigger = false;
+            if (securityNum != 0)
+                UIManager.instance.ChangeLogMessage(securityNum);
         }
         else
         {
             GetComponent<BoxCollider2D>().isTrigger = true;
+            if(securityNum != 0)
+                UIManager.instance.ChangeLogMessage(securityNum);
         }
     }
 
@@ -185,7 +194,7 @@ public class Tile : MonoBehaviour {
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
         }
     }
-    private void AddSequrity(Sprite sprite)
+    private void AddSecurity(Sprite sprite)
     {
         if (this.transform.childCount < 2)
         {
@@ -201,14 +210,18 @@ public class Tile : MonoBehaviour {
             TextMesh textMeshtmp = meshObject.AddComponent<TextMesh>();
             meshObject.transform.parent = _gameObject.transform;
             meshObject.transform.localPosition = new Vector3(0, -0.5f, 0);
-            textMeshtmp.characterSize = 0.3f;
+            textMeshtmp.characterSize = 0.4f;
             textMeshtmp.anchor = TextAnchor.UpperCenter;
             textMeshtmp.alignment = TextAlignment.Center;
             textMeshtmp.color = Color.black;
-            textMeshtmp.text = "13123123";
+            securityNum = BuildManager.instance.GetSecurityIndex();
+            textMeshtmp.text = securityNum.ToString();
             meshtmp.sortingOrder = 3;
+            BuildManager.instance.IncreaseSecurityIndex();
+            BuildManager.instance.SettingSecurity();
         }
     }
+
     public void SetIsObjectSelectModeFalse()
     {
         isObjectSelectMode = false;

@@ -9,6 +9,14 @@ public class Simulation : MonoBehaviour {
     private bool isPaused;
     [SerializeField] private GameObject player;
     private GameObject playTmp;
+    private float time = 0;
+    private void Update()
+    {
+        if(isPlaying)
+        {
+            time += Time.deltaTime;
+        }
+    }
     //11.14 파라미터 추가
     public void CreateCharacter(bool isAuthority)
     {
@@ -59,5 +67,9 @@ public class Simulation : MonoBehaviour {
     public bool GetIsPaused()
     {
         return isPaused;
+    }
+    public float GetTime()
+    {
+        return time;
     }
 }

@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private ScrollRect LogWindow;
     [SerializeField] private GameObject InteractionObject;
     [SerializeField] private GameObject fileBrowserPanel;
-
+    [SerializeField] private Text time;
     private Simulation simulation;
     private Character character;
 
@@ -26,8 +26,10 @@ public class UIManager : MonoBehaviour {
     private bool isClickPalletArrow = true;
     private bool isMouseMoveClick = false;
     private bool isObjectSelectMode = false;
-
+    private bool isLogShow = false;
     private Vector3 tempClickPosition;
+
+    private string timeString;
     private void Awake()
     {
         if (instance == null)
@@ -44,7 +46,7 @@ public class UIManager : MonoBehaviour {
         //타일 생성시 가로세로 가져오기, 사용자가 입력한 값을 가져옴
         width = CreateTileWindow.transform.GetChild(0).gameObject;
         height = CreateTileWindow.transform.GetChild(1).gameObject;
-        //캐릭터 가져와야함
+        
     }
 	
 	// Update is called once per frame
@@ -89,7 +91,33 @@ public class UIManager : MonoBehaviour {
                 Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
             }
         }
-        
+        if (simulation.GetIsPlaying())
+        {
+            time.gameObject.SetActive(true);
+            if ((int)simulation.GetTime() / 60 < 10)
+            {
+                if ((int)simulation.GetTime() % 60 < 10)
+                {
+                    time.text = "0" + (int)simulation.GetTime() / 60 + " : 0" + (int)simulation.GetTime() % 60;
+                }
+                else
+                {
+                    time.text = "0" + (int)simulation.GetTime() / 60 + " : " + (int)simulation.GetTime() % 60;
+                }
+            }
+            else
+            {
+                if ((int)simulation.GetTime() % 60 < 10)
+                {
+                    time.text = (int)simulation.GetTime() / 60 + " : 0" + (int)simulation.GetTime() % 60;
+                }
+                else
+                {
+                    time.text = (int)simulation.GetTime() / 60 + " : " + (int)simulation.GetTime() % 60;
+                }
+            }
+            timeString = time.text;
+        }
     }
 
     public void CreateTile()
@@ -105,7 +133,7 @@ public class UIManager : MonoBehaviour {
         FileManager.instance.IsSaveFile = true;
 
         fileBrowserPanel.SetActive(true);
-
+        CreateTileWindow.SetActive(false);
         //FileManager.instance.Save();
     }
 
@@ -116,7 +144,7 @@ public class UIManager : MonoBehaviour {
         FileManager.instance.IsSaveFile = false;
 
         fileBrowserPanel.SetActive(true);
-
+        CreateTileWindow.SetActive(false);
         //FileManager.instance.Load();
     }
 
@@ -129,7 +157,7 @@ public class UIManager : MonoBehaviour {
 
     public void Play()
     {
-        if (/*BuildManager.instance.GetIsSetTileAndSequrity() &&*/ !simulation.GetIsPlaying())
+        if (BuildManager.instance.GetIsSetTileAndSecurity() && !simulation.GetIsPlaying())
         {
             characterSelectWindow.SetActive(true);
             Pallet.SetActive(false);
@@ -294,5 +322,21 @@ public class UIManager : MonoBehaviour {
     public void ChangeInteractionText(bool isShow)
     {
         InteractionObject.SetActive(isShow);
+    }
+    public void ChangeLogMessage(int securityIndex)
+    {
+        if (!isLogShow)
+        {
+            Text logText = LogWindow.content.GetComponent<Text>();
+            logText.text += securityIndex + "번 시스템위치에서 문이 열려있습니다. (" + timeString + ")\n";
+            LogWindow.verticalScrollbar.value = 0;
+            isLogShow = true;
+            StartCoroutine(ChangeIsLogShow());
+        }
+    }
+    IEnumerator ChangeIsLogShow()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isLogShow = false;
     }
 }
