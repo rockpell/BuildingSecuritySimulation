@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class FileManager : MonoBehaviour {
@@ -101,7 +99,9 @@ public class FileManager : MonoBehaviour {
         _resultJson = JsonUtility.ToJson(jsonWrapper, true);
 
         //File.WriteAllText(Application.dataPath + "/Player.json", _resultJson);
-        File.WriteAllText(filePath + "/Player.json", _resultJson);
+        System.DateTime _myTime = System.DateTime.Now;
+        string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
+        File.WriteAllText(filePath + "/" + _result  + ".json", _resultJson);
     }
 
     public void Load()
@@ -123,7 +123,9 @@ public class FileManager : MonoBehaviour {
 
     public void SaveLog(string data)
     {
-        
+        System.DateTime _myTime = System.DateTime.Now;
+        string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
+        File.WriteAllText(Application.dataPath + "/log" + _result  + ".txt", data);
     }
 
     public bool IsFileBrowsing {
