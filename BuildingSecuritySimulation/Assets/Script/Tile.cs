@@ -113,15 +113,17 @@ public class Tile : MonoBehaviour {
     {
         if (GetComponent<BoxCollider2D>().isTrigger)
         {
+            Debug.Log("test1");
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (securityNum != 0)
-                UIManager.instance.ChangeLogMessage(securityNum);
+                UIManager.instance.ChangeLogMessage(securityNum , "번 시스템위치에서 문이 닫혔습니다.");
         }
         else
         {
+            Debug.Log("test2");
             GetComponent<BoxCollider2D>().isTrigger = true;
             if(securityNum != 0)
-                UIManager.instance.ChangeLogMessage(securityNum);
+                UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 열려있습니다.");
         }
     }
 

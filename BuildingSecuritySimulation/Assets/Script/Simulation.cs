@@ -9,6 +9,7 @@ public class Simulation : MonoBehaviour {
     private bool isPaused;
     [SerializeField] private GameObject player;
     private GameObject playTmp;
+    private Character nowPlayer;
     private float time = 0;
     private void Update()
     {
@@ -24,6 +25,7 @@ public class Simulation : MonoBehaviour {
         {
             playTmp = Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
             playTmp.SendMessage("AuthoritySelect", isAuthority);
+            nowPlayer = playTmp.GetComponent<Character>();
         }
     }
     public void Play()
@@ -58,9 +60,9 @@ public class Simulation : MonoBehaviour {
     {
 
     }
-    public GameObject GetPlayer()
+    public Character GetPlayer()
     {
-        return player;
+        return nowPlayer;
     }
     public bool GetIsPlaying()
     {

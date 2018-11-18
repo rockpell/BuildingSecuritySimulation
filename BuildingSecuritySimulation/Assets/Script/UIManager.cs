@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Text time;
     [SerializeField] private GameObject exitSavePanel;
     private Simulation simulation;
-    private Character character;
 
     private GameObject width; // 사용자가 입력한 width
     private GameObject height; // 사용자가 입력한 height
@@ -28,8 +27,9 @@ public class UIManager : MonoBehaviour {
     private bool isMouseMoveClick = false;
     private bool isObjectSelectMode = false;
     private bool isLogShow = false;
+    private bool isCharacterAuthoritySelect = false;
     private Vector3 tempClickPosition;
-
+    private Text logText;
     private string timeString;
     private void Awake()
     {
@@ -43,11 +43,10 @@ public class UIManager : MonoBehaviour {
     void Start () {
         //시뮬레이션 찾기
         simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
-        character = simulation.GetPlayer().GetComponent<Character>();
         //타일 생성시 가로세로 가져오기, 사용자가 입력한 값을 가져옴
         width = CreateTileWindow.transform.GetChild(0).gameObject;
         height = CreateTileWindow.transform.GetChild(1).gameObject;
-        
+        logText = LogWindow.content.GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -92,7 +91,7 @@ public class UIManager : MonoBehaviour {
                 Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
             }
         }
-        if (simulation.GetIsPlaying())
+        if (isCharacterAuthoritySelect)
         {
             time.gameObject.SetActive(true);
             if ((int)simulation.GetTime() / 60 < 10)
@@ -168,6 +167,7 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(ShowErrorMessage("이미 시뮬레이션이 동작중입니다."));
         }
+        logText.text = "";
     }
 
     public void Pause()
@@ -192,6 +192,7 @@ public class UIManager : MonoBehaviour {
         simulation.Stop();
         LogWindow.gameObject.SetActive(false);
         Pallet.SetActive(true);
+        isCharacterAuthoritySelect = false;
     }
 
     public void Exit()
@@ -206,7 +207,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowLog()
     {
-        FileManager.instance.SaveLog();
+       
     }
 
     public void ShowPallet()
@@ -219,6 +220,7 @@ public class UIManager : MonoBehaviour {
         simulation.CreateCharacter(isAuthority);
         characterSelectWindow.SetActive(false);
         LogWindow.gameObject.SetActive(true);
+        isCharacterAuthoritySelect = true;
     }
 
     public void PalletSelect(int index)
@@ -227,19 +229,7 @@ public class UIManager : MonoBehaviour {
         BuildManager.instance.SelectTileType(index);
         BuildManager.instance.SetObjectSelectMode(false);
     }
-    // 11.14 캐릭터 생성때문에 문제가 있음
-    public void getNoAuthority()
-    {
-        character.AuthoritySelect(false);
-        
-    }
-    // 11.14 캐릭터 생성때문에 문제가 있음
-    public void getAuthority()
-    {
-        character.AuthoritySelect(true);
-        //simulation.CreateCharacter();
-        characterSelectWindow.SetActive(false);
-    }
+    
     public void CharacterSelectCancle()
     {
         characterSelectWindow.SetActive(false);
@@ -330,16 +320,16 @@ public class UIManager : MonoBehaviour {
     {
         InteractionObject.SetActive(isShow);
     }
-    public void ChangeLogMessage(int securityIndex)
+    public void ChangeLogMessage(int securityIndex, string openText)
     {
         if (!isLogShow)
         {
-            Text logText = LogWindow.content.GetComponent<Text>();
-            logText.text += securityIndex + "번 시스템위치에서 문이 열려있습니다. (" + timeString + ")\n";
+            logText.text += securityIndex + openText + " (" + timeString + ")\n";
             LogWindow.verticalScrollbar.value = 0;
-            if (!character.GetAuthority())
+            Debug.Log(simulation.GetPlayer().GetAuthority());
+            if (!simulation.GetPlayer().GetAuthority())
             {
-                logText.text += securityIndex + "번 시스템위치에서 경보가 발생했습니다. (" + timeString + ")\n";
+                logText.text += securityIndex + openText + " (" + timeString + ")\n";
             }
             isLogShow = true;
             StartCoroutine(ChangeIsLogShow());
