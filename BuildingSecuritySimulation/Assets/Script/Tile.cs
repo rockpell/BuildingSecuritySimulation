@@ -12,7 +12,6 @@ public class Tile : MonoBehaviour {
     private GameObject additionObject;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer childeSprite;                //문,창문 색깔바꾸기위한 변수
-    private UIManager uIManager;
     private bool isObjectSelectMode;                    //개체선택모드인지
     // Use this for initialization
     void Start () {
@@ -43,12 +42,12 @@ public class Tile : MonoBehaviour {
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (name == type.Door)
             {
-                AddImageObject(BuildManager.instance.GetDoorTileSprite(), 1, true, "Door");
+                AddImageObject(BuildManager.instance.GetDoorTileSprite(), 1);
                 tileType = name;
             }
             else if (name == type.Window)
             {
-                AddImageObject(BuildManager.instance.GetWindowTileSprite(), 1, true, "Window");
+                AddImageObject(BuildManager.instance.GetWindowTileSprite(), 1);
                 tileType = name;
             }
             else if (name == type.Wall)
@@ -60,12 +59,11 @@ public class Tile : MonoBehaviour {
             {
                 if (tileType == type.Door || tileType == type.Window)
                 {
-                    AddImageObject(Resources.Load<Sprite>("Sprites/siren"), 2, false, "Sequrity");
+                    AddSequrity(BuildManager.instance.GetSequritySprite());
                 }
                 else
                 {
-                    uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-                    uIManager.StartCoroutine(uIManager.ShowErrorMessage("벽에는 보안시스템을 설치 할 수 없습니다."));
+                    UIManager.instance.StartCoroutine(UIManager.instance.ShowErrorMessage("벽에는 보안시스템을 설치 할 수 없습니다."));
                 }
             }
         }
@@ -108,7 +106,14 @@ public class Tile : MonoBehaviour {
 
     public void Interact()
     {
-
+        if (GetComponent<BoxCollider2D>().isTrigger)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
     }
 
     public void Select(bool select, bool isObjectSelect)
@@ -116,7 +121,7 @@ public class Tile : MonoBehaviour {
         isObjectSelectMode = isObjectSelect;
         if (select)
         {
-            if (isObjectSelect)
+            if (isObjectSelectMode)
             {
                 //문,창문이 있을때
                 if (transform.childCount > 0)
@@ -134,7 +139,7 @@ public class Tile : MonoBehaviour {
         }
         else
         {
-            if (isObjectSelect)
+            if (isObjectSelectMode)
             {
                 if (transform.childCount > 0)
                 {
@@ -163,10 +168,10 @@ public class Tile : MonoBehaviour {
         }
     }
     
-    private void AddImageObject(Sprite sprite, int sortingOrder, bool makeCollider, string tag)
+    private void AddImageObject(Sprite sprite, int sortingOrder)
     {
         GameObject _gameObject;
-
+        
         if (this.transform.childCount > 0)
         {
             this.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
@@ -178,12 +183,52 @@ public class Tile : MonoBehaviour {
             _gameObject.AddComponent<SpriteRenderer>();
             _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             _gameObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
-            _gameObject.tag = tag;
-            //if (makeCollider) _gameObject.AddComponent<BoxCollider2D>();
+        }
+    }
+    private void AddSequrity(Sprite sprite)
+    {
+        if (this.transform.childCount < 2)
+        {
+            GameObject _gameObject;
+            _gameObject = new GameObject();
+            _gameObject.transform.SetParent(this.transform, false);
+            _gameObject.AddComponent<SpriteRenderer>();
+            _gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            _gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            _gameObject.transform.Translate(0, 0.5f, 0);
+            GameObject meshObject = new GameObject();
+            MeshRenderer meshtmp = meshObject.AddComponent<MeshRenderer>();
+            TextMesh textMeshtmp = meshObject.AddComponent<TextMesh>();
+            meshObject.transform.parent = _gameObject.transform;
+            meshObject.transform.localPosition = new Vector3(0, -0.5f, 0);
+            textMeshtmp.characterSize = 0.3f;
+            textMeshtmp.anchor = TextAnchor.UpperCenter;
+            textMeshtmp.alignment = TextAlignment.Center;
+            textMeshtmp.color = Color.black;
+            textMeshtmp.text = "13123123";
+            meshtmp.sortingOrder = 3;
         }
     }
     public void SetIsObjectSelectModeFalse()
     {
         isObjectSelectMode = false;
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && tileType == type.Window || tileType == type.Door)
+        {
+            UIManager.instance.ChangeInteractionText(true);
+            Character playerTmp = collision.GetComponentInParent<Character>();
+            playerTmp.AddTileList(this);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && tileType == type.Window || tileType == type.Door)
+        {
+            UIManager.instance.ChangeInteractionText(false);
+            Character playerTmp = collision.GetComponentInParent<Character>();
+            playerTmp.DeleteList(this);
+        }
     }
 }

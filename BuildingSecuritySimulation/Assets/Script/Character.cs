@@ -7,17 +7,22 @@ public class Character : MonoBehaviour {
     private bool authority;
     public float speed = 0.2f;
     private SpriteRenderer sprite;
+    private List<Tile> tileList;
     // Use this for initialization
     void Start () {
-         Camera.main.orthographicSize = 5;
+        tileList = new List<Tile>();
+         Camera.main.orthographicSize = 7;
         sprite = gameObject.GetComponent<SpriteRenderer>();
+        gameObject.tag = "Player";
         if (authority)
         {
             sprite.sprite = Resources.Load<Sprite>("Sprites/Authority");
+            sprite.sortingOrder = 3;
         }
         else
         {
             sprite.sprite = Resources.Load<Sprite>("Sprites/NoAuthority");
+            sprite.sortingOrder = 3;
         }
     }
 	
@@ -64,17 +69,38 @@ public class Character : MonoBehaviour {
         if (Input.GetKey(KeyCode.F))
         {
             Debug.Log("문열고닫고중");
+            if(tileList.Count >0)
+            {
+                for (int i = 0; i < tileList.Count; i++)
+                {
+                    tileList[i].Interact();
+                }
+            }
         }
     }
     public void AuthoritySelect(bool isAuthority)
     {
+
         authority = isAuthority;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void AddTileList(Tile tile)
     {
-        if(collision.transform.tag == "Window" || collision.transform.tag == "Window")
+        Debug.Log("추가");
+        if (!tileList.Contains(tile))
         {
-
+            Debug.Log("추가됨");
+            tileList.Add(tile);
         }
+        Debug.Log(tileList.Count);
+    }
+    public void DeleteList(Tile tile)
+    {
+        Debug.Log("삭제");
+        if (tileList.Contains(tile))
+        {
+            Debug.Log("삭제됨");
+            tileList.Remove(tile);
+        }
+        Debug.Log(tileList.Count);
     }
 }

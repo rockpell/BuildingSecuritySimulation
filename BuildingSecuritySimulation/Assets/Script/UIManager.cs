@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    public static UIManager instance;
     [SerializeField] private Image pause;
     [SerializeField] private GameObject characterSelectWindow;
     [SerializeField] private GameObject CreateTileWindow;
     [SerializeField] private GameObject Pallet;
     [SerializeField] private Text warningText;
     [SerializeField] private Text ErrorMessage;
-    [SerializeField] private GameObject LogWindow;
+    [SerializeField] private ScrollRect LogWindow;
+    [SerializeField] private GameObject InteractionObject;
     [SerializeField] private GameObject fileBrowserPanel;
 
     private Simulation simulation;
@@ -26,7 +28,14 @@ public class UIManager : MonoBehaviour {
     private bool isObjectSelectMode = false;
 
     private Vector3 tempClickPosition;
-
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            return;
+        }
+    }
     // Use this for initialization
     void Start () {
         //시뮬레이션 찾기
@@ -116,11 +125,6 @@ public class UIManager : MonoBehaviour {
         if (simulation.GetIsPlaying()) return;
         BuildManager.instance.SetObjectSelectMode(true);
         isObjectSelectMode = true;
-        //else
-        //{
-        //    BuildManager.instance.SetObjectSelectMode(false);
-        //    isObjectSelectMode = false;
-        //}
     }
 
     public void Play()
@@ -157,7 +161,7 @@ public class UIManager : MonoBehaviour {
     public void Stop()
     {
         simulation.Stop();
-        LogWindow.SetActive(false);
+        LogWindow.gameObject.SetActive(false);
         Pallet.SetActive(true);
     }
 
@@ -181,7 +185,7 @@ public class UIManager : MonoBehaviour {
     {
         simulation.CreateCharacter(isAuthority);
         characterSelectWindow.SetActive(false);
-        LogWindow.SetActive(true);
+        LogWindow.gameObject.SetActive(true);
     }
 
     public void PalletSelect(int index)
@@ -286,5 +290,9 @@ public class UIManager : MonoBehaviour {
         ErrorMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         ErrorMessage.gameObject.SetActive(false);
+    }
+    public void ChangeInteractionText(bool isShow)
+    {
+        InteractionObject.SetActive(isShow);
     }
 }

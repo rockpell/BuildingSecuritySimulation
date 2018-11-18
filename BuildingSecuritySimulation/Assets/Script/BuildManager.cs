@@ -18,6 +18,7 @@ public class BuildManager : MonoBehaviour {
     private Sprite doorTileSprite;  // 문 타일 이미지
     private Sprite windowTileSprite;    // 창문 타일 이미지
     private Sprite wallTileSprite;  // 벽 타일 이미지
+    private Sprite sequritySprite;  // 벽 타일 이미지
 
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
@@ -36,6 +37,7 @@ public class BuildManager : MonoBehaviour {
         wallTileSprite = Resources.Load<Sprite>("Sprites/wall");
         doorTileSprite = Resources.Load<Sprite>("Sprites/door");
         windowTileSprite = Resources.Load<Sprite>("Sprites/window");
+        sequritySprite = Resources.Load<Sprite>("Sprites/siren");
     }
 	
 	// Update is called once per frame
@@ -201,6 +203,10 @@ public class BuildManager : MonoBehaviour {
         return windowTileSprite;
     }
 
+    public Sprite GetSequritySprite()
+    {
+        return sequritySprite;
+    }
     private void DeleteTiles() // 선택한 타일을 지우는 함수
     {
         if (tileArray != null)

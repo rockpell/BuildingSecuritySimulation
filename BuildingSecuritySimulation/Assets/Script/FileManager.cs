@@ -139,7 +139,7 @@ public class FileManager : MonoBehaviour {
     private void CloseFileBrowser()
     {
         isFileBrowsing = false;
-        GameObject.Find("UIManager").GetComponent<UIManager>().CloseFileBrowserPanel();
+        UIManager.instance.CloseFileBrowserPanel();
     }
 
 }
