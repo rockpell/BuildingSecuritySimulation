@@ -211,6 +211,8 @@ public class UIManager : MonoBehaviour {
         time.text = "";
         isPaused = false;
         pause.color = Color.white;
+        Debug.Log(logText.text);
+        FileManager.instance.SaveLog(logText.text);
     }
 
     public void Exit()
@@ -222,7 +224,7 @@ public class UIManager : MonoBehaviour {
         exitSavePanel.SetActive(true);
         //Application.Quit();
     }
-
+    //필요없을듯
     public void ShowLog()
     {
        
