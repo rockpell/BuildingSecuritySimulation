@@ -8,20 +8,33 @@ public class Character : MonoBehaviour {
     public float speed = 5.0f;
     private SpriteRenderer sprite;
     private List<Tile> tileList;
-    private AudioSource audio;
-    private AudioClip audioClip;
+    private AudioSource[] audio = new AudioSource[5];
+    private AudioClip[] audioClip = new AudioClip[5];
     private Rigidbody2D rigidbody;
     Vector3 movement;
     // Use this for initialization
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        for(int i=0; i<5; i++)
+        {
+            audio[i] = gameObject.AddComponent<AudioSource>() as AudioSource;
+            audio[i].Stop();
+        }
+        audioClip[0] = Resources.Load("audio/siren", typeof(AudioClip)) as AudioClip;
+        audioClip[1] = Resources.Load("audio/opendoor", typeof(AudioClip)) as AudioClip;
+        audioClip[2] = Resources.Load("audio/closedoor", typeof(AudioClip)) as AudioClip;
+        audioClip[3] = Resources.Load("audio/openwindow", typeof(AudioClip)) as AudioClip;
+        audioClip[4] = Resources.Load("audio/closewindow", typeof(AudioClip)) as AudioClip;
+        for (int j = 0; j < 5; j++)
+        {
+            audio[j].clip = audioClip[j];
+        }
     }
     void Start () {
         tileList = new List<Tile>();
         Camera.main.orthographicSize = 7;
         sprite = gameObject.GetComponent<SpriteRenderer>();
-        //audio = GameObject.Find("audio").GetComponent<AudioSource>();
         gameObject.tag = "Player";
         if (authority)
         {
@@ -60,11 +73,9 @@ public class Character : MonoBehaviour {
        
         movement.Set(h, v, 0);
         movement = movement.normalized * speed * Time.deltaTime;
-
+        rigidbody.MovePosition(transform.position + movement);
         if (h == 0 || v == 0)
             return;
-        rigidbody.MovePosition(transform.position + movement);
-
         Quaternion newRotation = Quaternion.LookRotation(movement);
 //        rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation,newRotation,speed*Time.deltaTime);
       
@@ -73,6 +84,7 @@ public class Character : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            audio[1].Play();
             if(tileList.Count >0)
             {
                 for (int i = 0; i < tileList.Count; i++)
