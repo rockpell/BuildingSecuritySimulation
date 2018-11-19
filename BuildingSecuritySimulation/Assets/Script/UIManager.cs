@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
     public static UIManager instance;
     [SerializeField] private Image pause;
+    [SerializeField] private Image play;
     [SerializeField] private GameObject characterSelectWindow;
     [SerializeField] private GameObject CreateTileWindow;
     [SerializeField] private GameObject Pallet;
@@ -180,6 +181,7 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(ShowErrorMessage("벽과 보안시스템이 설치가 되어있지 않습니다."));
         }
+        play.color = Color.red;
         BuildManager.instance.SelectTileType(type.Blank);
         logText.text = "";
     }
@@ -211,7 +213,7 @@ public class UIManager : MonoBehaviour {
         time.text = "";
         isPaused = false;
         pause.color = Color.white;
-        Debug.Log(logText.text);
+        play.color = Color.white;
         FileManager.instance.SaveLog(logText.text);
     }
 
