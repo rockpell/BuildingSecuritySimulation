@@ -101,12 +101,28 @@ public class Tile : MonoBehaviour {
             GetComponent<BoxCollider2D>().isTrigger = false;
             if (securityNum != 0)
                 UIManager.instance.ChangeLogMessage(securityNum , "번 시스템위치에서 문이 닫혔습니다.");
+            if (tileType == type.Door)
+            {
+                UIManager.instance.PlaySound(0);
+            }
+            else if (tileType == type.Window)
+            {
+                UIManager.instance.PlaySound(2);
+            }
         }
         else
         {
             GetComponent<BoxCollider2D>().isTrigger = true;
             if(securityNum != 0)
                 UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 열려있습니다.");
+            if (tileType == type.Door)
+            {
+                UIManager.instance.PlaySound(1);
+            }
+            else if (tileType == type.Window)
+            {
+                UIManager.instance.PlaySound(3);
+            }
         }
     }
 
@@ -203,8 +219,11 @@ public class Tile : MonoBehaviour {
             textMeshtmp.text = securityNum.ToString();
             meshtmp.sortingOrder = 3;
             BuildManager.instance.IncreaseSecurityIndex();
+            BuildManager.instance.IncreaseSecurityCount();
+            Debug.Log("count "+BuildManager.instance.securityCount);
             BuildManager.instance.SettingSecurity();
             isSecurity = true; // 보안 설치 유무 변경
+            
         }
     }
 

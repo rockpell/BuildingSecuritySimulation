@@ -24,6 +24,8 @@ public class BuildManager : MonoBehaviour {
     private bool isSetTile;                         // 타일이 설치 되었는지
     private bool isSetSecurity;                     // 보안 시스템이 설치 되었는지
     private int securityIndex = 1;
+    private int tileCount = 0;
+    public int securityCount = 0;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -94,6 +96,7 @@ public class BuildManager : MonoBehaviour {
                 DeselectTile();
             }
         }
+        
     }
 
     public void CreateTile(int width, int height)
@@ -150,13 +153,9 @@ public class BuildManager : MonoBehaviour {
             _tempTile.SetType((type)tileDatas[i].tileType);
             _tempTile.SetIsSecurity(tileDatas[i].isSecurity);
 
-            if(tileDatas[i].isSecurity)
-            {
-                SettingSecurity();
-            }
             if(tileDatas[i].tileType != (int)type.Blank)
             {
-                isSetTile = true;
+                tileCount++;
             }
         }
     }
@@ -197,12 +196,12 @@ public class BuildManager : MonoBehaviour {
                     if (!isObjectSelectMode)
                     {
                         tileArray[i].SetType(selectedType);
+                        tileCount++;
                     }
                 }
             }
             isSetTile = true;
         }
-        else isSetTile = false;
     }
 
     public void SetObjectSelectMode(bool value)
@@ -243,10 +242,12 @@ public class BuildManager : MonoBehaviour {
             {
                 if (tileArray[i] != null)
                 {
-                    if(tileArray[i].transform.childCount > 0)
+                    if (tileArray[i].GetIsSecurity()) securityCount--;
+                    if (tileArray[i].transform.childCount > 0)
                     {
                         for(int p = 0; p < tileArray[i].transform.childCount; p++)
                         {
+                            tileCount--;
                             tileArray[i].SetIsSecurity(false);
                             Destroy(tileArray[i].transform.GetChild(p).gameObject);
                         }
@@ -332,8 +333,7 @@ public class BuildManager : MonoBehaviour {
 
     public bool GetIsSetTileAndSecurity()
     {
-        Debug.Log(isSetTile +"  "+ isSetSecurity);
-        if (isSetTile && isSetSecurity) return true;
+        if (tileCount != 0 && securityCount != 0) return true;
         return false;
     }
     public int GetSecurityIndex()
@@ -347,5 +347,9 @@ public class BuildManager : MonoBehaviour {
     public void ResetSecurityIndex()
     {
         securityIndex = 1;
+    }
+    public void IncreaseSecurityCount()
+    {
+        securityCount++;
     }
 }

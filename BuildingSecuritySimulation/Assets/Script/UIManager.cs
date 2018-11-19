@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject fileBrowserPanel;
     [SerializeField] private Text time;
     [SerializeField] private GameObject exitSavePanel;
+    [SerializeField] private AudioClip[] clips;
+    [SerializeField] private AudioSource audioSource;
     private Simulation simulation;
 
     private GameObject width; // 사용자가 입력한 width
@@ -249,6 +251,7 @@ public class UIManager : MonoBehaviour {
     public void CharacterSelectCancle()
     {
         characterSelectWindow.SetActive(false);
+        Pallet.SetActive(true);
         simulation.Stop();
     }
 
@@ -361,5 +364,10 @@ public class UIManager : MonoBehaviour {
     public void ApplicationQuit()
     {
         Application.Quit();
+    }
+
+    public void PlaySound(int audioIndex)
+    {
+        audioSource.PlayOneShot(clips[audioIndex]);
     }
 }
