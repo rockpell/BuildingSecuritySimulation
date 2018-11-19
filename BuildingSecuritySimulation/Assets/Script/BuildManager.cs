@@ -54,6 +54,7 @@ public class BuildManager : MonoBehaviour {
                 {
                     DeselectTile();
                     mouseButtonDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    
                 }
                 else if (Input.GetMouseButton(0))
                 {
@@ -62,19 +63,22 @@ public class BuildManager : MonoBehaviour {
                     RaycastHit2D[] hit = Physics2D.BoxCastAll((mouseButtonDownPosition + mouseButtonUpPosition) / 2,
                         BoxSizeAbsolute(mouseButtonDownPosition - mouseButtonUpPosition),
                         0, Vector2.zero);
-
+                    DeselectTile(false);
                     tileArray = new Tile[hit.Length];
                     //Debug.Log(hit.Length);
                     //Debug.Log("mouseButtonDownPosition : " + mouseButtonDownPosition);
                     //Debug.Log("mouseButtonUpPosition : " + mouseButtonUpPosition);
+                    
                     for (int i = 0; i < hit.Length; i++)
                     {
                         tileArray[i] = hit[i].collider.GetComponent<Tile>();
                     }
+                    Debug.Log(tileArray.Length);
                     SelectTile();
                 }
                 else if (Input.GetMouseButtonUp(0) && !isObjectSelectMode)
                 {
+                    SettingTile();
                     DeselectTile();
                 }
             }
@@ -167,8 +171,21 @@ public class BuildManager : MonoBehaviour {
     {
         selectedType = (type)tileNum;
     }
-
     public void SelectTile()
+    {
+        if (tileArray != null)
+        {
+            for (int i = 0; i < tileArray.Length; i++)
+            {
+                if (tileArray[i] != null)
+                {
+                    tileArray[i].Select(true, isObjectSelectMode);
+                }
+            }
+            
+        }
+    }
+    public void SettingTile()
     {
         if(tileArray != null)
         {
@@ -176,17 +193,16 @@ public class BuildManager : MonoBehaviour {
             {
                 if(tileArray[i] != null)
                 {
-
                     //11.10 타입 설정 추가
                     if (!isObjectSelectMode)
                     {
                         tileArray[i].SetType(selectedType);
                     }
-                    tileArray[i].Select(true, isObjectSelectMode);
                 }
             }
             isSetTile = true;
         }
+        else isSetTile = false;
     }
 
     public void SetObjectSelectMode(bool value)

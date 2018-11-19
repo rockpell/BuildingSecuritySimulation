@@ -7,14 +7,12 @@ using UnityEngine;
 public class TileData {
     public Vector3 position;
     public int tileType;
-    public bool state;
     public bool isSecurity;
 
-    public TileData(Vector3 position, type tileType, bool state, bool isSecurity)
+    public TileData(Vector3 position, type tileType, bool isSecurity)
     {
         this.position = position;
         this.tileType = (int)tileType;
-        this.state = state;
         this.isSecurity = isSecurity;
     }
 

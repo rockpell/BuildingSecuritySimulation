@@ -89,7 +89,6 @@ public class FileManager : MonoBehaviour {
         {
             _tileDataList.Add(new TileData(_tiles.GetChild(i).position,
                 _tiles.GetChild(i).GetComponent<Tile>().GetType(),
-                _tiles.GetChild(i).GetComponent<Tile>().GetState(),
                 _tiles.GetChild(i).GetComponent<Tile>().GetIsSecurity()
                 ));
         }
