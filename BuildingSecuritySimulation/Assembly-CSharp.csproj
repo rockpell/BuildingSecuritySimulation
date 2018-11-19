@@ -72,7 +72,6 @@
     <Compile Include="Assets\Script\type.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
     <None Include="Assets\FileBrowser\readme.txt" />
-    <None Include="Assets\log20181119155437.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/BuildManager/BuildingSecuritySimulation/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
