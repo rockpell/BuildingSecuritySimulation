@@ -14,12 +14,14 @@ public class BuildManager : MonoBehaviour {
     private Vector3 mouseButtonDownPosition;
     private Vector3 mouseButtonUpPosition;
 
-    private Sprite normalTileSprite;    // 일반 타일 이미지
-    private Sprite doorTileSprite;  // 문 타일 이미지
-    private Sprite windowTileSprite;    // 창문 타일 이미지
-    private Sprite wallTileSprite;  // 벽 타일 이미지
-    private Sprite securitySprite;  // 벽 타일 이미지
-    private Simulation simulation;
+    private Sprite normalTileSprite;            // 일반 타일 이미지
+    private Sprite closeDoorTileSprite;         // 닫힌문 타일 이미지
+    private Sprite closeWindowTileSprite;       //닫힌 창문 타일 이미지
+    private Sprite wallTileSprite;              // 벽 타일 이미지
+    private Sprite securitySprite;              // 벽 타일 이미지
+    private Sprite openDoorTileSprite;          //열린 문  타일이미지
+    private Sprite openWindowTileSprite;        //열린 창문  타일이미지
+    private Simulation simulation;          
     private bool isObjectSelectMode;                //개체 선택 모드인지
     private bool isSetTile;                         // 타일이 설치 되었는지
     private bool isSetSecurity;                     // 보안 시스템이 설치 되었는지
@@ -37,9 +39,11 @@ public class BuildManager : MonoBehaviour {
         simulation = GameObject.Find("Simulation").GetComponent<Simulation>();
         normalTileSprite = Resources.Load<Sprite>("Sprites/nomarl_tile");
         wallTileSprite = Resources.Load<Sprite>("Sprites/wall");
-        doorTileSprite = Resources.Load<Sprite>("Sprites/door");
-        windowTileSprite = Resources.Load<Sprite>("Sprites/window");
+        closeDoorTileSprite = Resources.Load<Sprite>("Sprites/closeDoor");
+        closeWindowTileSprite = Resources.Load<Sprite>("Sprites/closeWindow");
         securitySprite = Resources.Load<Sprite>("Sprites/siren");
+        openDoorTileSprite = Resources.Load<Sprite>("Sprites/opendoor");
+        openWindowTileSprite = Resources.Load<Sprite>("Sprites/openwindow");
     }
 	
 	// Update is called once per frame
@@ -222,12 +226,12 @@ public class BuildManager : MonoBehaviour {
 
     public Sprite GetDoorTileSprite()
     {
-        return doorTileSprite;
+        return closeDoorTileSprite;
     }
 
     public Sprite GetWindowTileSprite()
     {
-        return windowTileSprite;
+        return closeWindowTileSprite;
     }
 
     public Sprite GetSecuritySprite()
@@ -351,5 +355,19 @@ public class BuildManager : MonoBehaviour {
     public void IncreaseSecurityCount()
     {
         securityCount++;
+    }
+
+    public Sprite ChangeTileImage(type currentType, bool isOpen)
+    {
+        if(currentType == type.Door)
+        {
+            if (isOpen) return openDoorTileSprite;
+            else return closeDoorTileSprite;
+        }
+        else
+        {
+            if (isOpen) return openWindowTileSprite;
+            else return closeWindowTileSprite;
+        }
     }
 }

@@ -96,6 +96,7 @@ public class Tile : MonoBehaviour {
 
     public void Interact()
     {
+        childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         if (GetComponent<BoxCollider2D>().isTrigger)
         {
             GetComponent<BoxCollider2D>().isTrigger = false;
@@ -109,6 +110,7 @@ public class Tile : MonoBehaviour {
             {
                 UIManager.instance.PlaySound(2);
             }
+            childeSprite.sprite = BuildManager.instance.ChangeTileImage(tileType, false);
         }
         else
         {
@@ -123,7 +125,10 @@ public class Tile : MonoBehaviour {
             {
                 UIManager.instance.PlaySound(3);
             }
+
+            childeSprite.sprite = BuildManager.instance.ChangeTileImage(tileType, true);
         }
+
     }
 
     public void Select(bool select, bool isObjectSelect)
