@@ -207,6 +207,8 @@ public class UIManager : MonoBehaviour {
         isCharacterAuthoritySelect = false;
         time.gameObject.SetActive(false);
         time.text = "";
+        isPaused = false;
+        pause.color = Color.white;
     }
 
     public void Exit()
@@ -247,6 +249,7 @@ public class UIManager : MonoBehaviour {
     public void CharacterSelectCancle()
     {
         characterSelectWindow.SetActive(false);
+        simulation.Stop();
     }
 
     public void MakeCreateTile()

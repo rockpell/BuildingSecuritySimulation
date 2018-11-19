@@ -127,6 +127,7 @@ public class BuildManager : MonoBehaviour {
     public void LoadCreateTile(TileData[] tileDatas)
     {
         ResetSecurityIndex();
+        
         GameObject _nomarlTile = Resources.Load<GameObject>("Prefabs/nomarl_tile");
         // 이미 생성된 타일들을 삭제
         if (tiles.childCount > 0) 
@@ -144,7 +145,15 @@ public class BuildManager : MonoBehaviour {
             Tile _tempTile = _tempObject.GetComponent<Tile>();
             _tempTile.SetType((type)tileDatas[i].tileType);
             _tempTile.SetIsSecurity(tileDatas[i].isSecurity);
-            _tempTile.SetState(tileDatas[i].state);
+
+            if(tileDatas[i].isSecurity)
+            {
+                SettingSecurity();
+            }
+            if(tileDatas[i].tileType != (int)type.Blank)
+            {
+                isSetTile = true;
+            }
         }
     }
 
@@ -307,6 +316,7 @@ public class BuildManager : MonoBehaviour {
 
     public bool GetIsSetTileAndSecurity()
     {
+        Debug.Log(isSetTile +"  "+ isSetSecurity);
         if (isSetTile && isSetSecurity) return true;
         return false;
     }

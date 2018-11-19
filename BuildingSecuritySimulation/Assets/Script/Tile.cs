@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
     private type tileType;
-    private bool tileState;
     private bool isSecurity; // 보안시스템 설치 여부
     private bool isSelect;
 
@@ -69,20 +68,6 @@ public class Tile : MonoBehaviour {
             }
         }
         
-    }
-    public bool IsDetect()
-    {
-        return false;
-    }
-
-    public bool GetState()
-    {
-        return tileState;
-    }
-
-    public void SetState(bool state)
-    {
-
     }
 
     public bool GetIsSecurity()

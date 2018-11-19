@@ -49,7 +49,7 @@ public class Simulation : MonoBehaviour {
     public void Stop()
     {
         isPlaying = false;
-        Destroy(playTmp);
+        if (playTmp != null) Destroy(playTmp);
     }
     //필요 없을듯
     public void SaveLog()
