@@ -1199,8 +1199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa62a84900a9b049b8d10654eb0facb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 144551285}
-  play: {fileID: 403986333}
+  pauseImage: {fileID: 144551285}
+  playImage: {fileID: 403986333}
+  objectSelectImage: {fileID: 1150506491}
   characterSelectWindow: {fileID: 1581614439}
   CreateTileWindow: {fileID: 1251755695}
   Pallet: {fileID: 1326832930}

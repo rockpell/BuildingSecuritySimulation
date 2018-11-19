@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance;
-    [SerializeField] private Image pause;
-    [SerializeField] private Image play;
+    [SerializeField] private Image pauseImage;
+    [SerializeField] private Image playImage;
+    [SerializeField] private Image objectSelectImage;
     [SerializeField] private GameObject characterSelectWindow;
     [SerializeField] private GameObject CreateTileWindow;
     [SerializeField] private GameObject Pallet;
@@ -160,6 +161,7 @@ public class UIManager : MonoBehaviour {
         if (simulation.GetIsPlaying()) return;
         BuildManager.instance.SetObjectSelectMode(true);
         isObjectSelectMode = true;
+        objectSelectImage.color = Color.red;
     }
 
     public void Play()
@@ -181,7 +183,7 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(ShowErrorMessage("벽과 보안시스템이 설치가 되어있지 않습니다."));
         }
-        play.color = Color.red;
+        playImage.color = Color.red;
         BuildManager.instance.SelectTileType(type.Blank);
         logText.text = "";
     }
@@ -193,12 +195,12 @@ public class UIManager : MonoBehaviour {
         if (!isPaused)
         {
             isPaused = true;
-            pause.color = Color.red;
+            pauseImage.color = Color.red;
         }
         else
         {
             isPaused = false;
-            pause.color = Color.white;
+            pauseImage.color = Color.white;
         }
         simulation.Pause();
     }
@@ -212,8 +214,8 @@ public class UIManager : MonoBehaviour {
         time.gameObject.SetActive(false);
         time.text = "";
         isPaused = false;
-        pause.color = Color.white;
-        play.color = Color.white;
+        pauseImage.color = Color.white;
+        playImage.color = Color.white;
         FileManager.instance.SaveLog(logText.text);
     }
 
@@ -250,6 +252,7 @@ public class UIManager : MonoBehaviour {
         if (isObjectSelectMode) ObjectDiselect(); // 팔레트의 타일을 선택하면 개체선택모드 해제
         BuildManager.instance.SelectTileType(index);
         BuildManager.instance.SetObjectSelectMode(false);
+        objectSelectImage.color = Color.white;
     }
     
     public void CharacterSelectCancle()
