@@ -5,12 +5,18 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 
     private bool authority;
-    public float speed = 0.2f;
+    public float speed = 5.0f;
     private SpriteRenderer sprite;
     private List<Tile> tileList;
     private AudioSource audio;
     private AudioClip audioClip;
+    private Rigidbody2D rigidbody;
+    Vector3 movement;
     // Use this for initialization
+    void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
     void Start () {
         tileList = new List<Tile>();
         Camera.main.orthographicSize = 7;
@@ -37,7 +43,9 @@ public class Character : MonoBehaviour {
 
     void FixedUpdate()
     {
-        Move();
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        Move(h,v);
         Vector3 camPos = transform.position;
         camPos.z = -1;
         Camera.main.transform.position = camPos;
@@ -47,24 +55,19 @@ public class Character : MonoBehaviour {
     {
         return authority;
     }
-    public void Move()
+    public void Move(float h, float v)
     {
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.Translate(Vector3.up*speed);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.Translate(Vector3.down * speed);
-            }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Translate(Vector3.left * speed);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Translate(Vector3.right * speed);
-        }
+       
+        movement.Set(h, v, 0);
+        movement = movement.normalized * speed * Time.deltaTime;
+
+        if (h == 0 || v == 0)
+            return;
+        rigidbody.MovePosition(transform.position + movement);
+
+        Quaternion newRotation = Quaternion.LookRotation(movement);
+//        rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation,newRotation,speed*Time.deltaTime);
+      
     }
     public void Interaction()
     {
