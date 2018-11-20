@@ -58,22 +58,22 @@ public class Character : MonoBehaviour {
         movement = movement.normalized * speed * Time.deltaTime;
         rigidbody.MovePosition(transform.position + movement);
         Quaternion turn = Quaternion.identity;
-        if (Input.GetAxisRaw("Horizontal") > 0)
+        if (h > 0)
         {
             turn.eulerAngles = new Vector3(0, 0, 90);
             transform.rotation = turn;
         }
-        if (Input.GetAxisRaw("Horizontal") < 0)
+        if (h < 0)
         {
             turn.eulerAngles = new Vector3(0, 0, 270);
             transform.rotation = turn;
         }
-        if (Input.GetAxisRaw("Vertical") > 0)
+        if (v > 0)
         {
             turn.eulerAngles = new Vector3(0, 0, 180);
             transform.rotation = turn;
         }
-        if (Input.GetAxisRaw("Vertical") < 0)
+        if (v < 0)
         {
             turn.eulerAngles = new Vector3(0, 0, 0);
             transform.rotation = turn;
