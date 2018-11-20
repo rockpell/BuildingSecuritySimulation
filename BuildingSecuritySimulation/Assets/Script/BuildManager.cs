@@ -71,15 +71,11 @@ public class BuildManager : MonoBehaviour {
                         0, Vector2.zero);
                     DeselectTile(false);
                     tileArray = new Tile[hit.Length];
-                    //Debug.Log(hit.Length);
-                    //Debug.Log("mouseButtonDownPosition : " + mouseButtonDownPosition);
-                    //Debug.Log("mouseButtonUpPosition : " + mouseButtonUpPosition);
                     
                     for (int i = 0; i < hit.Length; i++)
                     {
                         tileArray[i] = hit[i].collider.GetComponent<Tile>();
                     }
-                    Debug.Log(tileArray.Length);
                     SelectTile();
                 }
                 else if (Input.GetMouseButtonUp(0) && !isObjectSelectMode)
