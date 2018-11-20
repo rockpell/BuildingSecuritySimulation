@@ -136,7 +136,7 @@ public class FileManager : MonoBehaviour {
         {
             Directory.CreateDirectory(Application.dataPath + "/logs");
         }
-        File.WriteAllText(Application.dataPath + "/logs/log" + _result  + ".txt", data);
+        File.WriteAllLines(Application.dataPath + "/logs/log" + _result + ".txt", data.Split('\n'));
     }
 
     public bool IsFileBrowsing {
