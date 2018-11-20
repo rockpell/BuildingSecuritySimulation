@@ -54,15 +54,30 @@ public class Character : MonoBehaviour {
     }
     public void Move(float h, float v)
     {
-       
         movement.Set(h, v, 0);
         movement = movement.normalized * speed * Time.deltaTime;
         rigidbody.MovePosition(transform.position + movement);
-        if (h == 0 || v == 0)
-            return;
-        Quaternion newRotation = Quaternion.LookRotation(movement);
-//        rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation,newRotation,speed*Time.deltaTime);
-      
+        Quaternion turn = Quaternion.identity;
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            turn.eulerAngles = new Vector3(0, 0, 90);
+            transform.rotation = turn;
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            turn.eulerAngles = new Vector3(0, 0, 270);
+            transform.rotation = turn;
+        }
+        if (Input.GetAxisRaw("Vertical") > 0)
+        {
+            turn.eulerAngles = new Vector3(0, 0, 180);
+            transform.rotation = turn;
+        }
+        if (Input.GetAxisRaw("Vertical") < 0)
+        {
+            turn.eulerAngles = new Vector3(0, 0, 0);
+            transform.rotation = turn;
+        }
     }
     public void Interaction()
     {
