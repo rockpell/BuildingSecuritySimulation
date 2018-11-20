@@ -184,7 +184,7 @@ public class BuildManager : MonoBehaviour {
             
         }
     }
-    public void SettingTile()
+    public void SettingTile() // 벽, 문, 창문과 같은 타일 설치
     {
         if(tileArray != null)
         {
@@ -281,7 +281,7 @@ public class BuildManager : MonoBehaviour {
     }
 
 
-    private void SelectedTileChaneType(type tileType)
+    private void SelectedTileChaneType(type tileType) // 현재 선택된 타일의 속성을 바꾸는 함수
     {
         if(tileArray != null)
         {

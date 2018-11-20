@@ -131,11 +131,10 @@ public class FileManager : MonoBehaviour {
         string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
         if(Directory.Exists(Application.dataPath + "/logs/log"))
         {
-            Debug.Log("Exists");
-        } else
+        }
+        else
         {
             Directory.CreateDirectory(Application.dataPath + "/logs");
-            Debug.Log("Create!");
         }
         File.WriteAllText(Application.dataPath + "/logs/log" + _result  + ".txt", data);
     }

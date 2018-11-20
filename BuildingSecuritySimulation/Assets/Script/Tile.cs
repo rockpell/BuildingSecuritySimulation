@@ -55,7 +55,7 @@ public class Tile : MonoBehaviour {
                 GetComponent<SpriteRenderer>().sprite = BuildManager.instance.GetWallTileSprite();
                 tileType = name;
             }
-            else
+            else if(name == type.Sequrity)
             {
                 if (tileType == type.Door || tileType == type.Window)
                 {
@@ -63,7 +63,8 @@ public class Tile : MonoBehaviour {
                 }
                 else
                 {
-                    UIManager.instance.StartCoroutine(UIManager.instance.ShowErrorMessage("벽에는 보안시스템을 설치 할 수 없습니다."));
+                    GetComponent<BoxCollider2D>().isTrigger = true; // 보안 시스템이 설치 되지 않을 경우 원상 복구
+                    UIManager.instance.StartCoroutine(UIManager.instance.ShowErrorMessage("문과 창문에만 보안시스템을 설치 할 수 있습니다."));
                 }
             }
         }
