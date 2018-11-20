@@ -105,11 +105,11 @@ public class Tile : MonoBehaviour {
                 UIManager.instance.ChangeLogMessage(securityNum , "번 시스템위치에서 문이 닫혔습니다.");
             if (tileType == type.Door)
             {
-                UIManager.instance.PlaySound(0);
+                UIManager.instance.PlaySound(1); // 문 닫히는 소리
             }
             else if (tileType == type.Window)
             {
-                UIManager.instance.PlaySound(2);
+                UIManager.instance.PlaySound(3);
             }
             childeSprite.sprite = BuildManager.instance.ChangeTileImage(tileType, false);
         }
@@ -120,11 +120,11 @@ public class Tile : MonoBehaviour {
                 UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 열려있습니다.");
             if (tileType == type.Door)
             {
-                UIManager.instance.PlaySound(1);
+                UIManager.instance.PlaySound(0); // 문 열리는 소리
             }
             else if (tileType == type.Window)
             {
-                UIManager.instance.PlaySound(3);
+                UIManager.instance.PlaySound(2);
             }
 
             childeSprite.sprite = BuildManager.instance.ChangeTileImage(tileType, true);
