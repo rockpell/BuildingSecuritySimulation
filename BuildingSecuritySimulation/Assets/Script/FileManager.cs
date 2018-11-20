@@ -101,6 +101,11 @@ public class FileManager : MonoBehaviour {
         System.DateTime _myTime = System.DateTime.Now;
         string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
         File.WriteAllText(filePath + "/" + _result  + ".json", _resultJson);
+        if (UIManager.instance.IsExit)
+        {
+            Debug.Log("Application.Quit();");
+            Application.Quit();
+        }
     }
 
     public void Load()
@@ -124,7 +129,15 @@ public class FileManager : MonoBehaviour {
     {
         System.DateTime _myTime = System.DateTime.Now;
         string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
-        File.WriteAllText(Application.dataPath + "/log" + _result  + ".txt", data);
+        if(Directory.Exists(Application.dataPath + "/logs/log"))
+        {
+            Debug.Log("Exists");
+        } else
+        {
+            Directory.CreateDirectory(Application.dataPath + "/logs");
+            Debug.Log("Create!");
+        }
+        File.WriteAllText(Application.dataPath + "/logs/log" + _result  + ".txt", data);
     }
 
     public bool IsFileBrowsing {

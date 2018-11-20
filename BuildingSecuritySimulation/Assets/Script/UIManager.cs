@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour {
     private bool isObjectSelectMode = false;
     private bool isLogShow = false;
     private bool isCharacterAuthoritySelect = false;
+    private bool isExit = false;
+
     private Vector3 tempClickPosition;
     private Text logText;
     private string timeString;
@@ -216,7 +218,7 @@ public class UIManager : MonoBehaviour {
         isPaused = false;
         pauseImage.color = Color.white;
         playImage.color = Color.white;
-        FileManager.instance.SaveLog(logText.text);
+        FileManager.instance.SaveLog(logText.text); // 시뮬레이션 로그를 파일로 저장
     }
 
     public void Exit()
@@ -226,6 +228,7 @@ public class UIManager : MonoBehaviour {
         characterSelectWindow.SetActive(false);
         CreateTileWindow.SetActive(false);
         exitSavePanel.SetActive(true);
+        isExit = true;
         //Application.Quit();
     }
     //필요없을듯
@@ -296,6 +299,11 @@ public class UIManager : MonoBehaviour {
     public void CloseFileBrowserPanel()
     {
         fileBrowserPanel.SetActive(false);
+    }
+
+    public bool IsExit {
+        get { return isExit; }
+        set { isExit = value; }
     }
 
     private IEnumerator ShowWarningText()
