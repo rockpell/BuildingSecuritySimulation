@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -59,45 +60,48 @@ public class UIManager : MonoBehaviour {
 	void Update () {
         if (!simulation.GetIsPlaying())
         {
-            if (Input.GetAxis("Mouse ScrollWheel") < 0) // 화면 크기 조정
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                Camera.main.orthographicSize += 0.2f + (Camera.main.orthographicSize / 50);
-                if (Camera.main.orthographicSize > 100) Camera.main.orthographicSize = 100;
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-            {
-                Camera.main.orthographicSize -= 0.2f + (Camera.main.orthographicSize / 50);
-                if (Camera.main.orthographicSize < 5) Camera.main.orthographicSize = 5;
-            }
-
-            if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) // 마우스 오른쪽 버튼 또는 가운데 버튼을 이용하여 화면 이동
-            {
-                tempClickPosition = Input.mousePosition;
-                isMouseMoveClick = true;
-            }
-            if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2)) isMouseMoveClick = false;
-
-            if (isMouseMoveClick)
-            {
-                Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
-                tempClickPosition = Input.mousePosition;
-
-                if (Camera.main.transform.position.x < 5)
+                if (Input.GetAxis("Mouse ScrollWheel") < 0) // 화면 크기 조정
                 {
-                    Camera.main.transform.position = new Vector3(5, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    Camera.main.orthographicSize += 0.2f + (Camera.main.orthographicSize / 50);
+                    if (Camera.main.orthographicSize > 100) Camera.main.orthographicSize = 100;
                 }
-                else if (Camera.main.transform.position.x > 80)
+                else if (Input.GetAxis("Mouse ScrollWheel") > 0)
                 {
-                    Camera.main.transform.position = new Vector3(80, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    Camera.main.orthographicSize -= 0.2f + (Camera.main.orthographicSize / 50);
+                    if (Camera.main.orthographicSize < 5) Camera.main.orthographicSize = 5;
                 }
 
-                if (Camera.main.transform.position.y > 0)
+                if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) // 마우스 오른쪽 버튼 또는 가운데 버튼을 이용하여 화면 이동
                 {
-                    Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+                    tempClickPosition = Input.mousePosition;
+                    isMouseMoveClick = true;
                 }
-                else if (Camera.main.transform.position.y < -150)
+                if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2)) isMouseMoveClick = false;
+
+                if (isMouseMoveClick)
                 {
-                    Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
+                    Camera.main.transform.Translate((tempClickPosition - Input.mousePosition) * 0.01f * Camera.main.orthographicSize * 0.5f);
+                    tempClickPosition = Input.mousePosition;
+
+                    if (Camera.main.transform.position.x < 5)
+                    {
+                        Camera.main.transform.position = new Vector3(5, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    }
+                    else if (Camera.main.transform.position.x > 80)
+                    {
+                        Camera.main.transform.position = new Vector3(80, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    }
+
+                    if (Camera.main.transform.position.y > 0)
+                    {
+                        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+                    }
+                    else if (Camera.main.transform.position.y < -150)
+                    {
+                        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, -150, Camera.main.transform.position.z);
+                    }
                 }
             }
         }

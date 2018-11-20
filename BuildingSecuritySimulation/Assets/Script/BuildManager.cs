@@ -50,7 +50,7 @@ public class BuildManager : MonoBehaviour {
 	void Update () {
         if (!simulation.GetIsPlaying())
         {
-            if (EventSystem.current.IsPointerOverGameObject() == false)
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 if (Input.GetMouseButtonDown(0) && !isObjectSelectMode)
                 {
