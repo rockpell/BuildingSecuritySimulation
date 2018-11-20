@@ -175,6 +175,7 @@ public class UIManager : MonoBehaviour {
                 characterSelectWindow.SetActive(true);
                 Pallet.SetActive(false);
                 simulation.Play();
+                logText.text = "";
             }
             else
             {
@@ -187,7 +188,7 @@ public class UIManager : MonoBehaviour {
         }
         playImage.color = Color.red;
         BuildManager.instance.SelectTileType(type.Blank);
-        logText.text = "";
+        
     }
 
     public void Pause()
