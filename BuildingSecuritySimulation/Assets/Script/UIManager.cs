@@ -180,6 +180,7 @@ public class UIManager : MonoBehaviour {
                 Pallet.SetActive(false);
                 simulation.Play();
                 logText.text = "";
+                playImage.color = Color.red;
             }
             else
             {
@@ -190,7 +191,7 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(ShowErrorMessage("벽과 보안시스템이 설치가 되어있지 않습니다."));
         }
-        playImage.color = Color.red;
+        
         BuildManager.instance.SelectTileType(type.Blank);
         
     }
