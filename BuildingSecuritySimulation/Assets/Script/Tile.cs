@@ -18,11 +18,6 @@ public class Tile : MonoBehaviour {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
     public new type GetType()
     {
         return tileType;

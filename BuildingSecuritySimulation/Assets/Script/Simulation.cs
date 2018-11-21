@@ -11,12 +11,18 @@ public class Simulation : MonoBehaviour {
     private GameObject playTmp;
     private Character nowPlayer;
     private float time = 0;
+    private GameObject tiles;
+    private void Start()
+    {
+        tiles = GameObject.Find("Tiles");
+    }
     private void Update()
     {
         if(isPlaying)
         {
             time += Time.deltaTime;
         }
+
     }
     //11.14 파라미터 추가
     public void CreateCharacter(bool isAuthority)
@@ -50,6 +56,11 @@ public class Simulation : MonoBehaviour {
     {
         isPlaying = false;
         if (playTmp != null) Destroy(playTmp);
+        for (int i = 0; i < tiles.transform.childCount; i++)
+        {
+            Tile tile = tiles.transform.GetChild(i).GetComponent<Tile>();
+            tile.SetType(tile.GetType());
+        }
     }
     //필요 없을듯
     public void SaveLog()

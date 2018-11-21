@@ -168,6 +168,12 @@ public class UIManager : MonoBehaviour {
         BuildManager.instance.SetObjectSelectMode(true);
         isObjectSelectMode = true;
         objectSelectImage.color = Color.red;
+        Image[] palletImages;
+        palletImages = Pallet.GetComponentsInChildren<Image>();
+        for (int i = 0; i < palletImages.Length; i++)
+        {
+            palletImages[i].color = Color.white;
+        }
     }
 
     public void Play()
@@ -193,7 +199,12 @@ public class UIManager : MonoBehaviour {
         }
         
         BuildManager.instance.SelectTileType(type.Blank);
-        
+        Image[] palletImages;
+        palletImages = Pallet.GetComponentsInChildren<Image>();
+        for (int i = 0; i < palletImages.Length; i++)
+        {
+            palletImages[i].color = Color.white;
+        }
     }
 
     public void Pause()
@@ -262,6 +273,13 @@ public class UIManager : MonoBehaviour {
         BuildManager.instance.SelectTileType(index);
         BuildManager.instance.SetObjectSelectMode(false);
         objectSelectImage.color = Color.white;
+        Image[] palletImages;
+        palletImages = Pallet.GetComponentsInChildren<Image>();
+        for (int i = 0; i < palletImages.Length; i++)
+        {
+            if (i == index + 1) palletImages[i].color = Color.cyan;
+            else palletImages[i].color = Color.white;
+        }
     }
     
     public void CharacterSelectCancle()
