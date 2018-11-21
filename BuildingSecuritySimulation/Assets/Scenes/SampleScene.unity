@@ -1217,7 +1217,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 04bd122aac250724bba7fa36b2c74d1d, type: 3}
   - {fileID: 8300000, guid: e7ae9a1383f2b9d479bb7e4cf2655394, type: 3}
   - {fileID: 8300000, guid: e7b0cfc0dddde5e4bb91ff39d1c7e594, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 0be69e56f1a10b54aa777e129287d636, type: 3}
   audioSource: {fileID: 305076488}
 --- !u!4 &305076487
 Transform:

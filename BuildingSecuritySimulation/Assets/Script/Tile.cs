@@ -95,7 +95,7 @@ public class Tile : MonoBehaviour {
         return this.transform.position;
     }
 
-    public void Interact()
+    public void Interact(bool characterAuthority)
     {
         childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         if (GetComponent<BoxCollider2D>().isTrigger)
@@ -129,7 +129,7 @@ public class Tile : MonoBehaviour {
 
             childeSprite.sprite = BuildManager.instance.ChangeTileImage(tileType, true);
         }
-
+        if (isSecurity && !characterAuthority) UIManager.instance.PlaySound(4);
     }
 
     public void Select(bool select, bool isObjectSelect)
@@ -194,6 +194,7 @@ public class Tile : MonoBehaviour {
         }
         else
         {
+            spriteRenderer.sprite = BuildManager.instance.GetNormalTileSprite();
             _gameObject = new GameObject();
             _gameObject.transform.SetParent(this.transform, false);
             _gameObject.AddComponent<SpriteRenderer>();
@@ -226,7 +227,6 @@ public class Tile : MonoBehaviour {
             meshtmp.sortingOrder = 3;
             BuildManager.instance.IncreaseSecurityIndex();
             BuildManager.instance.IncreaseSecurityCount();
-            Debug.Log("count "+BuildManager.instance.securityCount);
             BuildManager.instance.SettingSecurity();
             isSecurity = true; // 보안 설치 유무 변경
             

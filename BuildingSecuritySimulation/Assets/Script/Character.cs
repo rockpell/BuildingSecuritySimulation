@@ -87,7 +87,7 @@ public class Character : MonoBehaviour {
             {
                 for (int i = 0; i < tileList.Count; i++)
                 {
-                    tileList[i].Interact();
+                    tileList[i].Interact(authority);
                 }
             }
         }
