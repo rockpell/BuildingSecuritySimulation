@@ -30,7 +30,10 @@ public class BuildManager : MonoBehaviour {
     public int securityCount = 0;
     private void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
     // Use this for initialization
     void Start () {

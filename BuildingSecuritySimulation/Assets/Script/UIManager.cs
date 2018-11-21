@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject exitSavePanel;
     [SerializeField] private AudioClip[] clips;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private Text FPSText;
     private Simulation simulation;
 
     private GameObject width; // 사용자가 입력한 width
@@ -38,6 +39,8 @@ public class UIManager : MonoBehaviour {
     private Vector3 tempClickPosition;
     private Text logText;
     private string timeString;
+    private float fps;
+    private float deltaTime = 0.0f;
     private void Awake()
     {
         if (instance == null)
@@ -58,6 +61,8 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        FPSText.text = "FPS : " + (int)(1.0f / deltaTime);
         if (!simulation.GetIsPlaying())
         {
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -292,7 +297,7 @@ public class UIManager : MonoBehaviour {
     public void MakeCreateTile()
     {
         //입력 값이 공백이면 텍스트를 띄운다
-        if(width.transform.GetComponentInChildren<InputField>().text == "" &&
+        if(width.transform.GetComponentInChildren<InputField>().text == "" ||
             height.transform.GetComponentInChildren<InputField>().text =="")
         {
             warningText.gameObject.SetActive(true);
