@@ -189,7 +189,7 @@ public class Tile : MonoBehaviour {
         }
         else
         {
-            spriteRenderer.sprite = BuildManager.instance.GetNormalTileSprite();
+            GetComponent<SpriteRenderer>().sprite = BuildManager.instance.GetNormalTileSprite();
             _gameObject = new GameObject();
             _gameObject.transform.SetParent(this.transform, false);
             _gameObject.AddComponent<SpriteRenderer>();
