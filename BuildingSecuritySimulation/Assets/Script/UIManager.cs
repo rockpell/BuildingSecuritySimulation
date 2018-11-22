@@ -41,6 +41,8 @@ public class UIManager : MonoBehaviour {
     private string timeString;
     private float fps;
     private float deltaTime = 0.0f;
+    private float fpsbaseTime = 0;
+    private float fpsShowTime = 0.1f;
     private void Awake()
     {
         if (instance == null)
@@ -62,7 +64,14 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        FPSText.text = "FPS : " + (int)(1.0f / deltaTime);
+        if (fpsbaseTime > fpsShowTime) fpsbaseTime = 0;
+        else
+        {
+            fpsbaseTime += Time.deltaTime;
+            FPSText.text = "FPS : " + (int)(1.0f / deltaTime);
+        }
+        
+        
         if (!simulation.GetIsPlaying())
         {
             if (!EventSystem.current.IsPointerOverGameObject())
