@@ -247,7 +247,7 @@ public class Tile : MonoBehaviour {
         {
             UIManager.instance.ChangeInteractionText(false);
             Character playerTmp = collision.GetComponentInParent<Character>();
-            playerTmp.DeleteList(this);
+            playerTmp.DeleteList();
         }
     }
 }

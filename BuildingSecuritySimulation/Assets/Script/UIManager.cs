@@ -192,6 +192,7 @@ public class UIManager : MonoBehaviour {
                 simulation.Play();
                 logText.text = "";
                 playImage.color = Color.red;
+                objectSelectImage.color = Color.white;
             }
             else
             {
@@ -293,6 +294,7 @@ public class UIManager : MonoBehaviour {
         Pallet.SetActive(true);
         simulation.Stop();
         playImage.color = Color.white;
+        objectSelectImage.color = Color.white;
     }
 
     public void MakeCreateTile()

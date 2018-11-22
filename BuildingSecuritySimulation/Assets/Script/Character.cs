@@ -103,11 +103,8 @@ public class Character : MonoBehaviour {
             tileList.Add(tile);
         }
     }
-    public void DeleteList(Tile tile)
+    public void DeleteList()
     {
-        if (tileList.Contains(tile))
-        {
-            tileList.Remove(tile);
-        }
+        tileList.Clear();
     }
 }
