@@ -64,11 +64,14 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        if (fpsbaseTime > fpsShowTime) fpsbaseTime = 0;
+        if (fpsbaseTime > fpsShowTime)
+        {
+            FPSText.text = "FPS : " + (int)(1.0f / deltaTime);
+            fpsbaseTime = 0;
+        }
         else
         {
             fpsbaseTime += Time.deltaTime;
-            FPSText.text = "FPS : " + (int)(1.0f / deltaTime);
         }
         
         
