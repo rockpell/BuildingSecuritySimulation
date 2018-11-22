@@ -252,6 +252,7 @@ public class BuildManager : MonoBehaviour {
                         {
                             tileCount--;
                             tileArray[i].SetIsSecurity(false);
+                            Debug.Log(tileArray[i].GetIsSecurity());
                             Destroy(tileArray[i].transform.GetChild(p).gameObject);
                         }
                             

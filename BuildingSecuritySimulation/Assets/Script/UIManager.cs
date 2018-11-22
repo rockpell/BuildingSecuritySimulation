@@ -384,14 +384,14 @@ public class UIManager : MonoBehaviour {
     {
         InteractionObject.SetActive(isShow);
     }
-    public void ChangeLogMessage(int securityIndex, string openText)
+    public void ChangeLogMessage(int securityIndex, string openText, bool isSecurity)
     {
         if (!isLogShow)
         {
             logText.text += securityIndex + openText + " (" + timeString + ")\n";
             LogWindow.verticalScrollbar.value = 0;
             Debug.Log(simulation.GetPlayer().GetAuthority());
-            if (!simulation.GetPlayer().GetAuthority())
+            if (!simulation.GetPlayer().GetAuthority() && isSecurity)
             {
                 logText.text += securityIndex +"번 시스템위치에서 경보가 발생했습니다. (" + timeString + ")\n";
             }

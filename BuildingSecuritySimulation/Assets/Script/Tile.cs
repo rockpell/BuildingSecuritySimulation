@@ -96,8 +96,8 @@ public class Tile : MonoBehaviour {
         if (GetComponent<BoxCollider2D>().isTrigger)
         {
             GetComponent<BoxCollider2D>().isTrigger = false;
-            if (securityNum != 0)
-                UIManager.instance.ChangeLogMessage(securityNum , "번 시스템위치에서 문이 닫혔습니다.");
+            if (securityNum != 0 && isSecurity)
+                UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 닫혔습니다.", isSecurity);
             if (tileType == type.Door)
             {
                 UIManager.instance.PlaySound(1); // 문 닫히는 소리
@@ -111,8 +111,8 @@ public class Tile : MonoBehaviour {
         else
         {
             GetComponent<BoxCollider2D>().isTrigger = true;
-            if(securityNum != 0)
-                UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 열려있습니다.");
+            if (securityNum != 0 && isSecurity)
+                UIManager.instance.ChangeLogMessage(securityNum, "번 시스템위치에서 문이 열려있습니다.", isSecurity);
             if (tileType == type.Door)
             {
                 UIManager.instance.PlaySound(0); // 문 열리는 소리
