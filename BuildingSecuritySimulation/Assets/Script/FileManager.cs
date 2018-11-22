@@ -19,26 +19,12 @@ public class FileManager : MonoBehaviour {
         if (instance == null)
             instance = this;
     }
+
     private void Start()
     {
         jsonWrapper = new JsonWrapper();
 
-        filePath = null;
-        isFileBrowsing = false;
-
-        fileBrower = new FileBrowser();
-
-        fileBrower.guiSkin = skins[0]; //set the starting skin
-                                       //set the various textures
-        fileBrower.fileTexture = file;
-        fileBrower.directoryTexture = folder;
-        fileBrower.backTexture = back;
-        fileBrower.driveTexture = drive;
-        //show the search bar
-        fileBrower.showSearch = true;
-        //search recursively (setting recursive search may cause a long delay)
-        fileBrower.searchRecursively = true;
-
+        ResetFileBrowser();
     }
 
     void OnGUI()
@@ -52,11 +38,11 @@ public class FileManager : MonoBehaviour {
                 Debug.Log(filePath);
                 if (filePath != null)
                 {
-                    CloseFileBrowser();
                     if (!isSaveFile)
                     {
                         Load();
                     }
+                    CloseFileBrowser();
                 }
 
                 if (fileBrower.isSelect)
@@ -153,6 +139,26 @@ public class FileManager : MonoBehaviour {
     {
         isFileBrowsing = false;
         UIManager.instance.CloseFileBrowserPanel();
+        ResetFileBrowser();
+    }
+
+    private void ResetFileBrowser()
+    {
+        filePath = null;
+        isFileBrowsing = false;
+
+        fileBrower = new FileBrowser();
+
+        fileBrower.guiSkin = skins[0]; //set the starting skin
+                                       //set the various textures
+        fileBrower.fileTexture = file;
+        fileBrower.directoryTexture = folder;
+        fileBrower.backTexture = back;
+        fileBrower.driveTexture = drive;
+        //show the search bar
+        fileBrower.showSearch = false;
+        //search recursively (setting recursive search may cause a long delay)
+        fileBrower.searchRecursively = true;
     }
 
 }
