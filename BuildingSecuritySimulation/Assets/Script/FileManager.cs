@@ -32,10 +32,9 @@ public class FileManager : MonoBehaviour {
         if (isFileBrowsing)
         {
             if (fileBrower.draw())
-            { //true is returned when a file has been selected
-              //the output file is a member if the FileInfo class, if cancel was selected the value is null
-                filePath = (fileBrower.outputFile == null) ? null : fileBrower.outputFile.ToString();
-                Debug.Log(filePath);
+            { 
+                filePath = (fileBrower.outputFile == null) ? null : fileBrower.outputFile.FullName;
+
                 if (filePath != null)
                 {
                     if (!isSaveFile)
@@ -44,10 +43,8 @@ public class FileManager : MonoBehaviour {
                     }
                     CloseFileBrowser();
                 }
-
                 if (fileBrower.isSelect)
                 {
-                    CloseFileBrowser();
                     if (isSaveFile)
                     {
                         filePath = fileBrower.GetNowDirectory();
@@ -56,11 +53,8 @@ public class FileManager : MonoBehaviour {
                         Save();
                     }
                 }
-                else
-                {
-                    CloseFileBrowser();
-                }
-
+                
+                CloseFileBrowser();
             }
         }
     }
@@ -96,7 +90,6 @@ public class FileManager : MonoBehaviour {
 
     public void Load()
     {
-        //string _loadData = File.ReadAllText(Application.dataPath + "/Player.json");
         string _loadData = File.ReadAllText(filePath);
         Debug.Log(_loadData);
         if (_loadData != null)
