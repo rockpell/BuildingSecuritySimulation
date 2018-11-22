@@ -292,6 +292,7 @@ public class UIManager : MonoBehaviour {
         characterSelectWindow.SetActive(false);
         Pallet.SetActive(true);
         simulation.Stop();
+        playImage.color = Color.white;
     }
 
     public void MakeCreateTile()
