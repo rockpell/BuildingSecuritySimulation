@@ -59,7 +59,7 @@ public class Tile : MonoBehaviour {
                 else
                 {
                     GetComponent<BoxCollider2D>().isTrigger = true; // 보안 시스템이 설치 되지 않을 경우 원상 복구
-                    UIManager.instance.StartCoroutine(UIManager.instance.ShowErrorMessage("문과 창문에만 보안시스템을 설치 할 수 있습니다."));
+                    UIManager.instance.ShowErrorMessageStart("문과 창문에만 보안시스템을 설치 할 수 있습니다.");
                 }
             }
         }

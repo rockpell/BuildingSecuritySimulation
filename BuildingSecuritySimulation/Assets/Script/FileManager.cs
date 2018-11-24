@@ -95,12 +95,19 @@ public class FileManager : MonoBehaviour {
         if (_loadData != null)
         {
             jsonWrapper = JsonUtility.FromJson<JsonWrapper>(_loadData);
-
-            BuildManager.instance.LoadCreateTile(jsonWrapper.tiledatas); // 로드한 데이터를 오브젝트로 제작
+            if(jsonWrapper.tiledatas != null)
+            {
+                BuildManager.instance.LoadCreateTile(jsonWrapper.tiledatas); // 로드한 데이터를 오브젝트로 제작
+            }
+            else // 지원하지 않는 json 양식일 경우
+            {
+                UIManager.instance.ShowErrorMessageStart("잘못된 파일입니다.");
+            }
+            
         }
         else
         {
-            Debug.Log("There is no data.");
+            UIManager.instance.ShowErrorMessageStart("내용이 없는 파일입니다.");
         }
     }
 

@@ -388,13 +388,19 @@ public class UIManager : MonoBehaviour {
         BuildManager.instance.SetObjectSelectMode(false);
         isObjectSelectMode = false;
     }
-    public IEnumerator ShowErrorMessage(string errorMessage)
+    private IEnumerator ShowErrorMessage(string errorMessage)
     {
         ErrorMessage.text = errorMessage;
         ErrorMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         ErrorMessage.gameObject.SetActive(false);
     }
+
+    public void ShowErrorMessageStart(string errorMessage)
+    {
+        StartCoroutine(ShowErrorMessage(errorMessage));
+    }
+
     public void ChangeInteractionText(bool isShow)
     {
         InteractionObject.SetActive(isShow);
