@@ -62,16 +62,6 @@ public class Simulation : MonoBehaviour {
             tile.SetType(tile.GetType());
         }
     }
-    //필요 없을듯
-    public void SaveLog()
-    {
-
-    }
-    //필요 없을듯
-    public void ShowLog(string tileData)
-    {
-
-    }
     public Character GetPlayer()
     {
         return nowPlayer;

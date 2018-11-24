@@ -7,8 +7,6 @@ public class Tile : MonoBehaviour {
     private bool isSecurity; // 보안시스템 설치 여부
     private bool isSelect;
 
-    private Vector3 tilePosition;
-    private GameObject additionObject;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer childeSprite;                //문,창문 색깔바꾸기위한 변수
     private bool isObjectSelectMode;                    //개체선택모드인지
@@ -78,11 +76,6 @@ public class Tile : MonoBehaviour {
         {
             AddSecurity(BuildManager.instance.GetSecuritySprite());
         }
-    }
-    //개필요없음
-    public void SetPosition(Vector3 pos)
-    {
-
     }
 
     public Vector3 GetPosition()

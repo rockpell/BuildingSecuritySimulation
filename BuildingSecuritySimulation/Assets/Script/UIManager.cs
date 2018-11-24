@@ -266,11 +266,6 @@ public class UIManager : MonoBehaviour {
         isExit = true;
         //Application.Quit();
     }
-    //필요없을듯
-    public void ShowLog()
-    {
-       
-    }
 
     public void ShowPallet()
     {

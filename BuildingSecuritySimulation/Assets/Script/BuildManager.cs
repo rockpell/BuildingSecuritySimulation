@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class BuildManager : MonoBehaviour {
     public static BuildManager instance;
     private type selectedType;
-    private string saveTile;
     private Tile[] tileArray;
 
     [SerializeField] private Transform tiles;
@@ -123,11 +122,6 @@ public class BuildManager : MonoBehaviour {
         }
         
     }
-    
-    public void ChangeTileType()
-    {
-
-    }
 
     public void SettingSecurity()
     {
@@ -187,7 +181,7 @@ public class BuildManager : MonoBehaviour {
             
         }
     }
-    public void SettingTile() // 벽, 문, 창문과 같은 타일 설치
+    private void SettingTile() // 벽, 문, 창문과 같은 타일 설치
     {
         if(tileArray != null)
         {
