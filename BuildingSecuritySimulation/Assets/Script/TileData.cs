@@ -15,13 +15,6 @@ public class TileData {
         this.tileType = (int)tileType;
         this.isSecurity = isSecurity;
     }
-
-    //public TileData(type tileType, bool state, bool isSecurity)
-    //{
-    //    this.tileType = (int)tileType;
-    //    this.state = state;
-    //    this.isSecurity = isSecurity;
-    //}
 }
 
 [Serializable]

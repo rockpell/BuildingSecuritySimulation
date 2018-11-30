@@ -8,7 +8,7 @@ public class FileManager : MonoBehaviour {
 
     public GUISkin[] skins;
     public Texture2D file, folder, back, drive;
-    private FileBrowser fileBrower;
+    private FileBrowser fileBrower; // 외부 라이브러리
 
     private string filePath;
     private bool isFileBrowsing;
@@ -77,7 +77,6 @@ public class FileManager : MonoBehaviour {
 
         _resultJson = JsonUtility.ToJson(jsonWrapper, true);
 
-        //File.WriteAllText(Application.dataPath + "/Player.json", _resultJson);
         System.DateTime _myTime = System.DateTime.Now;
         string _result = _myTime.Year.ToString() + _myTime.Month.ToString() + _myTime.Day.ToString() + _myTime.Hour.ToString() + _myTime.Minute.ToString() + _myTime.Second.ToString();
         File.WriteAllText(filePath + "/" + _result  + ".json", _resultJson);
@@ -148,16 +147,12 @@ public class FileManager : MonoBehaviour {
         isFileBrowsing = false;
 
         fileBrower = new FileBrowser();
-
-        fileBrower.guiSkin = skins[0]; //set the starting skin
-                                       //set the various textures
+        fileBrower.guiSkin = skins[0];
         fileBrower.fileTexture = file;
         fileBrower.directoryTexture = folder;
         fileBrower.backTexture = back;
         fileBrower.driveTexture = drive;
-        //show the search bar
         fileBrower.showSearch = false;
-        //search recursively (setting recursive search may cause a long delay)
         fileBrower.searchRecursively = true;
     }
 

@@ -165,7 +165,6 @@ public class UIManager : MonoBehaviour {
 
         fileBrowserPanel.SetActive(true);
         CreateTileWindow.SetActive(false);
-        //FileManager.instance.Save();
     }
 
     public void Load()
@@ -176,7 +175,6 @@ public class UIManager : MonoBehaviour {
 
         fileBrowserPanel.SetActive(true);
         CreateTileWindow.SetActive(false);
-        //FileManager.instance.Load();
     }
 
     public void ObjectSelect()
@@ -264,7 +262,6 @@ public class UIManager : MonoBehaviour {
         CreateTileWindow.SetActive(false);
         exitSavePanel.SetActive(true);
         isExit = true;
-        //Application.Quit();
     }
 
     public void ShowPallet()

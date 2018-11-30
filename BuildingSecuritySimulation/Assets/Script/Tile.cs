@@ -78,11 +78,6 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public Vector3 GetPosition()
-    {
-        return this.transform.position;
-    }
-
     public void Interact(bool characterAuthority)
     {
         childeSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
