@@ -71,20 +71,10 @@
     <Compile Include="Assets\Script\TileData.cs" />
     <Compile Include="Assets\Script\type.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
-    <None Include="Assets\logs\log20181121152450.txt" />
-    <None Include="Assets\logs\log20181121131945.txt" />
-    <None Include="Assets\logs\log2018112113732.txt" />
+    <None Include="Assets\logs\log20181122155657.txt" />
     <None Include="Assets\FileBrowser\readme.txt" />
-    <None Include="Assets\logs\log20181121153326.txt" />
-    <None Include="Assets\logs\log20181121152920.txt" />
-    <None Include="Assets\logs\log20181121152911.txt" />
-    <None Include="Assets\logs\log20181121131713.txt" />
-    <None Include="Assets\logs\log20181121153118.txt" />
-    <None Include="Assets\logs\log20181121152542.txt" />
-    <None Include="Assets\logs\log20181121153339.txt" />
-    <None Include="Assets\logs\log20181121131646.txt" />
-    <None Include="Assets\logs\log20181121152444.txt" />
-    <None Include="Assets\logs\log20181121154311.txt" />
+    <None Include="Assets\logs\log2018112216140.txt" />
+    <None Include="Assets\logs\log20181122155858.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/BuildManager/BuildingSecuritySimulation/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
