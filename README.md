@@ -19,6 +19,9 @@ Windows10(64bit)
 ## 작성언어
 C#(Unity)
 
+## 플랫폼
+Windows10에 최적화되어 있습니다.
+
 ## 사용 IDE
 
 Unity 2018.1.6f
